@@ -58,7 +58,8 @@
                     </span>
                   </span>
                   <span class="ml-4 min-w-0 flex flex-col text-left">
-                    <span class="text-xs font-semibold tracking-wide uppercase"
+                    <span
+                      class="text-xs font-semibold tracking-wide uppercase"
                       >{{ step.name }}</span
                     >
                     <span class="text-sm text-gray-500">{{
@@ -1083,7 +1084,29 @@
                     "
                   />
                 </div>
-
+                <div class="col-span-6 sm:col-span-4" v-if="primaryOwner === 1">
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-700"
+                    >Birth date</label
+                  >
+                  <input
+                    type="date"
+                    required
+                    v-model="form.birthDate"
+                    class="
+                      mt-1
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      block
+                      w-full
+                      shadow-sm
+                      sm:text-sm
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
                 <div class="col-span-6">
                   <p class="text-base font-medium text-gray-900">Owner 2</p>
                   <div class="flex items-center pt-2">
@@ -1144,6 +1167,29 @@
                   <input
                     type="text"
                     v-model="form.owner2LastName"
+                    class="
+                      mt-1
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      block
+                      w-full
+                      shadow-sm
+                      sm:text-sm
+                      border-gray-300
+                      rounded-md
+                    "
+                  />
+                </div>
+                <div class="col-span-6 sm:col-span-4" v-if="primaryOwner === 2">
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-700"
+                    >Birth date</label
+                  >
+                  <input
+                    type="date"
+                    required
+                    v-model="form.birthDate"
                     class="
                       mt-1
                       focus:ring-indigo-500
@@ -2322,6 +2368,7 @@ import Swal from "sweetalert2";
 import { maska } from "maska";
 import moment from "moment-timezone";
 import axios from "axios";
+import { v4 } from "uuid";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
 import { CheckIcon } from "@heroicons/vue/solid";
 import { ref } from "vue";
@@ -2441,6 +2488,9 @@ export default {
         originationFeeAmount: 0,
         disbursedAmount: 0,
       },
+      silaFirstName: "",
+      silaLastName: "",
+      primaryOwner: 0,
       submitBtn: false,
       states: null,
       new_merchant: null,
@@ -2518,27 +2568,30 @@ export default {
           href: "#",
           status: "upcoming",
         },
-      ]
+      ],
     };
   },
   created() {
     this.moment = moment;
     var date = new Date();
     date.setDate(date.getDate() + 1);
-    this.form.startDate = new Date(date).toISOString().slice(0, 10).toLocaleString("en-US", {timeZone: "America/New_York"});
+    this.form.startDate = new Date(date)
+      .toISOString()
+      .slice(0, 10)
+      .toLocaleString("en-US", { timeZone: "America/New_York" });
 
     if (localStorage.merchantEmail)
       this.searchMerchantEmail(localStorage.merchantEmail);
   },
   watch: {
-    "form.factorRate": function (factorRate) {
+    "form.factorRate": function(factorRate) {
       if (this.form.principalAmount)
         this.form.paybackAmount = (
           factorRate.replace(/[^0-9.]/g, "") *
           this.form.principalAmount.replace(/[^0-9.]/g, "")
         ).toFixed(2);
     },
-    "form.originationFee": function (originationFee) {
+    "form.originationFee": function(originationFee) {
       console.log(originationFee, this.form.principalAmount);
       if (this.form.principalAmount) {
         this.form.originationFeeAmount = (
@@ -2551,14 +2604,14 @@ export default {
         ).toFixed(2);
       }
     },
-    "form.endDate": function () {
+    "form.endDate": function() {
       if (this.form.startDate) {
         this.form.numberOfDays = moment(this.form.endDate)
           .add(1, "days")
           .diff(moment(this.form.startDate), "days");
       }
     },
-    "form.startDate": function (startDate) {
+    "form.startDate": function(startDate) {
       var date = new Date(startDate);
       date.setDate(date.getDate() + 1);
       this.form.endDate = new Date(date).toISOString().slice(0, 10);
@@ -2586,7 +2639,7 @@ export default {
           headers: authHeader(),
         })
         .then((response) => {
-          var merchant = response.data.data.filter(function (merchant_row) {
+          var merchant = response.data.data.filter(function(merchant_row) {
             if (merchant_row.merchantInformation.email == email) {
               return merchant_row;
             }
@@ -2665,6 +2718,7 @@ export default {
           owner1LastName: this.form.owner1LastName,
           owner2FirstName: this.form.owner2FirstName,
           owner2LastName: this.form.owner2LastName,
+          birthDate: this.form.birthDate,
           title: this.form.title,
           primaryContactName: this.form.primaryContactName,
           idNumber: this.form.idNumber,
@@ -2693,13 +2747,13 @@ export default {
         .post(process.env.VUE_APP_API_URL + `/merchants`, data, {
           headers: authHeader(),
         })
-        .then((response) => {
+        .then(async (response) => {
           console.log(response);
           this.new_merchant = response.data.data.merchantInformation.id;
           console.log(this.new_merchant);
-          this.submitApplication();
+          await this.createSilaMerchant(data);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error.response) {
             // Request made and server responded
             console.log(error.response);
@@ -2711,7 +2765,7 @@ export default {
                 return error.response.data.errors[key];
               }
             );
-            console.log("haha", listOfObjects);
+            console.log("error", listOfObjects);
             Swal.fire({
               title: "Oops! Something went wrong.",
               text: listOfObjects[0],
@@ -2724,6 +2778,35 @@ export default {
             // Something happened in setting up the request that triggered an Error
             console.log("Error", error);
           }
+        });
+    },
+    async createSilaMerchant() {
+      const referenceNumber = v4().split("-")[0];
+
+      let merchantData = {
+        handle: `user.paybotic.${referenceNumber}`,
+        firstName: this.silaFirstName,
+        lastName: this.silaLastName,
+        address: this.form.streetAddress,
+        city: this.form.city,
+        state: this.form.state,
+        zip: this.form.zipCode,
+        phone: this.form.phoneNumber,
+        email: this.form.email,
+        dateOfBirth: this.form.birthDate,
+        ssn: this.form.idNumber,
+      };
+      await axios
+        .post(
+          process.env.VUE_APP_SILAMONEY_URL + `/entities/individual-user`,
+          merchantData
+        )
+        .then(async (res) => {
+          console.log(res);
+          await this.submitApplication();
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     async submitApplication() {
@@ -2767,7 +2850,7 @@ export default {
             }
           });
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error.response) {
             console.log(error.response.data);
             console.log(error.response.status);
@@ -2798,6 +2881,7 @@ export default {
           }
         });
     },
+
     submitForm() {
       if (this.existingMerchant) this.submitApplication();
       else {
@@ -2825,9 +2909,9 @@ export default {
     },
     stepperClick(id) {
       for (let i = 0; i < this.steps.length; i++) {
-        if(i < id) this.steps[i].status = "complete"
-        else if(i === id) this.steps[i].status = "current" 
-        else this.steps[i].status = "upcoming" 
+        if (i < id) this.steps[i].status = "complete";
+        else if (i === id) this.steps[i].status = "current";
+        else this.steps[i].status = "upcoming";
       }
       this.currentStep = id;
     },
@@ -2836,14 +2920,31 @@ export default {
     },
     populatePrimaryContact(number) {
       if (number == 1) {
-        this.form.primaryContactName =
-          this.form.owner1FirstName + " " + this.form.owner1LastName;
-        this.form.markOwner2AsPrimaryContact = null;
+        if (this.primaryOwner == 1) {
+          this.primaryOwner = 0;
+          this.form.primaryContactName = "";
+        } else {
+          this.form.primaryContactName =
+            this.form.owner1FirstName + " " + this.form.owner1LastName;
+          this.form.markOwner2AsPrimaryContact = null;
+          this.silaFirstName = this.form.owner1FirstName;
+          this.silaLastName = this.form.owner1LastName;
+          this.primaryOwner = 1;
+        }
       } else {
-        this.form.primaryContactName =
-          this.form.owner2FirstName + " " + this.form.owner2LastName;
-        this.form.markOwner1AsPrimaryContact = null;
+        if (this.primaryOwner == 2) {
+          this.primaryOwner = 0;
+          this.form.primaryContactName = "";
+        } else {
+          this.form.primaryContactName =
+            this.form.owner2FirstName + " " + this.form.owner2LastName;
+          this.form.markOwner1AsPrimaryContact = null;
+          this.silaFirstName = this.form.owner2FirstName;
+          this.silaLastName = this.form.owner2LastName;
+          this.primaryOwner = 2;
+        }
       }
+      console.log(this.silaFirstName, this.silaLastName);
     },
     formatCurrency(value) {
       if (!value) {
