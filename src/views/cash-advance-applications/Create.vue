@@ -458,10 +458,12 @@
                     >State / Province</label
                   >
                   <input
-                    type="text"
-                    v-maska="'AA'"
                     required
+                    type="text"
+                    list="state"
+                    v-maska="'AA'"
                     v-model="form.state"
+                    autocomplete="not"
                     class="
                       mt-1
                       focus:ring-indigo-500
@@ -474,6 +476,29 @@
                       rounded-md
                     "
                   />
+                  <datalist
+                    id="state"
+                    class="
+                      mt-1
+                      focus:ring-indigo-500
+                      focus:border-indigo-500
+                      block
+                      w-full
+                      shadow-sm
+                      sm:text-sm
+                      border-gray-300
+                      rounded-md
+                    "
+                  >
+                    <option
+                      class="
+                    hidden"
+                      v-for="(state, i) in stateOptions"
+                      :key="i"
+                      :value="state"
+                    >
+                    </option>
+                  </datalist>
                 </div>
 
                 <div class="col-span-6 sm:col-span-3 lg:col-span-2">
@@ -2386,6 +2411,8 @@ import { Money3Directive } from "v-money3";
 import authHeader from "@/services/auth-header";
 import SilaMoneyService from "../../services/silamoney.service";
 
+import { validStates } from "../../states.json";
+
 const pages = [
   {
     name: "List of Cash Advance Applications",
@@ -2491,6 +2518,7 @@ export default {
         originationFeeAmount: 0,
         disbursedAmount: 0,
       },
+      stateOptions: validStates,
       silaFirstName: "",
       silaLastName: "",
       primaryOwner: 0,
