@@ -2803,6 +2803,20 @@ export default {
         )
         .then(async (res) => {
           console.log(res);
+          await this.requestSilaKYC(merchantData.handle);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async requestSilaKYC(userHandle) {
+      await axios
+        .post(
+          process.env.VUE_APP_SILAMONEY_URL +
+            `/entities/${userHandle}/request-kyc`
+        )
+        .then(async (res) => {
+          console.log(res);
           await this.submitApplication();
         })
         .catch((err) => {
