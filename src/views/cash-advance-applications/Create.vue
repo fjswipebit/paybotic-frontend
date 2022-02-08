@@ -1092,6 +1092,7 @@
                   >
                   <input
                     type="date"
+                    @change="selectBirthDate($event)"
                     required
                     v-model="form.birthDate"
                     class="
@@ -1188,6 +1189,7 @@
                   >
                   <input
                     type="date"
+                    @change="selectBirthDate($event)"
                     required
                     v-model="form.birthDate"
                     class="
@@ -2382,6 +2384,7 @@ import {
 import { required, email } from "vuelidate/lib/validators";
 import { Money3Directive } from "v-money3";
 import authHeader from "@/services/auth-header";
+import SilaMoneyService from "../../services/silamoney.service";
 
 const pages = [
   {
@@ -2633,6 +2636,18 @@ export default {
     },
   },
   methods: {
+    selectBirthDate(event) {
+      let year = moment().diff(event.target.value, "years");
+      if (year >= 18) return;
+
+      /**Show error */
+      Swal.fire({
+        title: "Oops! Must be at least 18 years old.",
+        text: "Please enter a valid birth date.",
+        icon: "error",
+      });
+      this.form.birthDate = "";
+    },
     async searchMerchantEmail(email) {
       axios
         .get(process.env.VUE_APP_API_URL + `/merchants?`, {
@@ -2751,7 +2766,7 @@ export default {
           console.log(response);
           this.new_merchant = response.data.data.merchantInformation.id;
           console.log(this.new_merchant);
-          await this.createSilaMerchant(data);
+          await this.createSilaMerchant(this.new_merchant);
         })
         .catch(function(error) {
           if (error.response) {
@@ -2780,7 +2795,7 @@ export default {
           }
         });
     },
-    async createSilaMerchant() {
+    async createSilaMerchant(id) {
       const referenceNumber = v4().split("-")[0];
 
       let merchantData = {
@@ -2803,25 +2818,16 @@ export default {
         )
         .then(async (res) => {
           console.log(res);
-          await this.requestSilaKYC(merchantData.handle);
+          await this.requestSilaKYC(merchantData.handle, id);
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    async requestSilaKYC(userHandle) {
-      await axios
-        .post(
-          process.env.VUE_APP_SILAMONEY_URL +
-            `/entities/${userHandle}/request-kyc`
-        )
-        .then(async (res) => {
-          console.log(res);
-          await this.submitApplication();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    async requestSilaKYC() {
+      // this._silaMoneyService.requestKYC(userHandle,id)
+      //  SilaMoneyService.requestKYC(userHandle, id);
+      SilaMoneyService.requestKYC("user.ali.paybotic49c05406", 12);
     },
     async submitApplication() {
       var data = {
