@@ -464,7 +464,6 @@
                     v-maska="'AA'"
                     v-model="form.state"
                     autocomplete="not"
-                    @change="handleStateSelect($event)"
                     class="
                       mt-1
                       focus:ring-indigo-500
@@ -2873,10 +2872,22 @@ export default {
           console.log(err);
         });
     },
-    async requestSilaKYC() {
+    // async requestSilaKYC() {
+    async requestSilaKYC(userHandle, id) {
       // this._silaMoneyService.requestKYC(userHandle,id)
-      //  SilaMoneyService.requestKYC(userHandle, id);
-      SilaMoneyService.requestKYC("user.ali.paybotic49c05406", 12);
+
+      try {
+        let res = await SilaMoneyService.requestKYC(userHandle, id);
+        if (res.success) {
+          this.submitApplication();
+        } else {
+          console.log(res);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      // SilaMoneyService.requestKYC("user.ali.testkyc100", 1.1);
     },
     async submitApplication() {
       var data = {
