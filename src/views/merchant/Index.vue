@@ -33,10 +33,10 @@
         <div class="col-span-full sm:col-start-13">
           <label for="email" class="sr-only">Search</label>
           <div class="mt-1 flex rounded-md shadow-sm">
-             <button
-                @click="reset"
-                type="button"
-                class="
+            <button
+              @click="reset"
+              type="button"
+              class="
                   inline-flex
                   items-center
                   px-4
@@ -52,13 +52,10 @@
                   focus:outline-none
                   focus:ring-2 focus:ring-offset-2 focus:ring-red-500
                 "
-              >
-                <RefreshIcon
-                  class="-ml-0.5 mr-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-                Reset
-              </button>
+            >
+              <RefreshIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+              Reset
+            </button>
             <div
               class="relative flex items-stretch flex-grow focus-within:z-10"
             >
@@ -414,11 +411,6 @@
                             <div class="py-1">
                               <MenuItem v-slot="{ active }">
                                 <router-link
-                                  :to="
-                                    `/merchants/` +
-                                    merchant.merchantInformation.id +
-                                    `/show`
-                                  "
                                   :class="[
                                     active
                                       ? 'bg-gray-100 text-gray-900'
@@ -443,8 +435,8 @@
                                 <router-link
                                   :to="
                                     `/merchants/` +
-                                    merchant.merchantInformation.id +
-                                    `/edit`
+                                      merchant.merchantInformation.id +
+                                      `/edit`
                                   "
                                   :class="[
                                     active
@@ -520,7 +512,7 @@ import {
   EyeIcon,
   PencilAltIcon,
   DocumentDownloadIcon,
-  RefreshIcon
+  RefreshIcon,
 } from "@heroicons/vue/solid";
 
 export default {
@@ -536,7 +528,7 @@ export default {
     EyeIcon,
     PencilAltIcon,
     DocumentDownloadIcon,
-    RefreshIcon
+    RefreshIcon,
   },
   data() {
     return {
@@ -549,7 +541,7 @@ export default {
     this.getMerchants();
   },
   methods: {
-    reset(){
+    reset() {
       this.search = null;
       this.getMerchants();
     },
@@ -579,13 +571,9 @@ export default {
     },
     async exportToExcel() {
       await axios
-        .post(
-          process.env.VUE_APP_API_URL +
-            `/merchants/export`,'',
-          {
-            headers: authHeader(),
-          }
-        )
+        .post(process.env.VUE_APP_API_URL + `/merchants/export`, "", {
+          headers: authHeader(),
+        })
         .then((response) => {
           window.location.href = response.data.data;
         });

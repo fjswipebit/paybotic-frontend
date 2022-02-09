@@ -13,7 +13,6 @@ class SilaMoneyService {
 
     try {
       result = await axios(request);
-
       // console.log("KYC Request", result.data.result.data);
       await this.savePendingKYC({
         txId: result.data.result.data.verification_uuid,
@@ -42,6 +41,32 @@ class SilaMoneyService {
     try {
       result = await axios(request);
       console.log(result);
+    } catch (ServerlessError) {
+      console.log(ServerlessError);
+    }
+  }
+
+  async linkBankAccount(bankDetails) {
+    let data = {
+      userHandle: bankDetails.userHandle,
+      accountNumber: bankDetails.accountNumber,
+      routingNumber: bankDetails.routingNumber,
+      accountType: bankDetails.accountType,
+      accountName: bankDetails.accountName,
+    };
+
+    const request = {
+      method: "POST",
+      url: `${process.env.VUE_APP_SILAMONEY_URL}/bank-accounts`,
+      data,
+    };
+
+    let result;
+
+    try {
+      result = await axios(request);
+      console.log(result);
+      return result;
     } catch (ServerlessError) {
       console.log(ServerlessError);
     }

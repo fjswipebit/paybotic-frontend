@@ -42,6 +42,10 @@
               )
             }}</time>
           </p>
+          <p class="text-sm font-medium text-gray-500">
+            KYC Status:
+            <a :class="`text-green-400`">Verified</a>
+          </p>
         </div>
       </div>
       <div
@@ -58,6 +62,27 @@
           md:space-x-3
         "
       >
+        <button
+          @click="handleLinkingBankAccount()"
+          type="button"
+          class="
+              inline-flex
+              items-center
+              px-4
+              py-2
+              border border-transparent
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              bg-blue-700
+              hover:bg-blue-500
+              focus:outline-none
+              focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
+            "
+        >
+          Link Bank Account
+        </button>
         <router-link
           :to="`/merchants/` + $route.params.id + `/edit`"
           type="button"
@@ -300,8 +325,8 @@
                     <dd class="mt-1 text-sm text-gray-900">
                       {{
                         merchant.businessInformation.owner1FirstName +
-                        " " +
-                        merchant.businessInformation.owner1LastName
+                          " " +
+                          merchant.businessInformation.owner1LastName
                       }}
                     </dd>
                   </div>
@@ -312,8 +337,8 @@
                     <dd class="mt-1 text-sm text-gray-900">
                       {{
                         merchant.businessInformation.owner2FirstName +
-                        " " +
-                        merchant.businessInformation.owner2LastName
+                          " " +
+                          merchant.businessInformation.owner2LastName
                       }}
                     </dd>
                   </div>
@@ -606,8 +631,8 @@
                                 <router-link
                                   :to="
                                     `/cash-advances/` +
-                                    cash_advance.id +
-                                    `/show`
+                                      cash_advance.id +
+                                      `/show`
                                   "
                                   :class="[
                                     active
@@ -764,6 +789,7 @@ import moment from "moment-timezone";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
 import { EyeIcon } from "@heroicons/vue/solid";
 import authHeader from "@/services/auth-header";
+import SilaMoneyService from "../../services/silamoney.service";
 
 const pages = [
   { name: "List of Merchants", href: "/merchants", current: false },
@@ -871,6 +897,25 @@ export default {
       }
       const number = (value / 1).toFixed(2).replace(",", ".");
       return "$ " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    async handleLinkingBankAccount() {
+      console.log(this.merchant);
+
+      let merchantData = {
+        userHandle: this.merchant.merchantInformation.userHandle,
+        accountNumber: this.merchant.merchantInformation.bankAccountNumber,
+        routingNumber: this.merchant.merchantInformation
+          .bankAccountRountingNumber,
+        accountType: this.merchant.merchantInformation.bankType,
+        accountName: this.merchant.merchantInformation.name + " account",
+      };
+
+      try {
+        let res = await SilaMoneyService.linkBankAccount(merchantData);
+        return res;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
