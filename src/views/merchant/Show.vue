@@ -101,8 +101,7 @@
         >
           Link Bank Account
         </button>
-        <router-link
-          :to="`/merchants/` + $route.params.id + `/edit`"
+        <button
           type="button"
           class="
             inline-flex
@@ -125,8 +124,10 @@
             focus:ring-blue-500
           "
         >
-          Edit
-        </router-link>
+          <a :href="`/merchants/` + this.merchantId + `/edit`">
+            Edit
+          </a>
+        </button>
       </div>
     </div>
 
@@ -849,6 +850,7 @@ export default {
     this.getMerchantInfo();
     this.getcashAdvances();
     this.moment = moment;
+    this.merchantId = this.$route.params.id;
   },
   computed: {
     dateDiff() {
