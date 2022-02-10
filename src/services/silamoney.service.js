@@ -1,7 +1,22 @@
 import axios from "axios";
 
 class SilaMoneyService {
-  async createSilaMerchant() {}
+  async createSilaMerchant() {
+    // const request = {
+    //   method: "POST",
+    //   url: `${process.env.VUE_APP_SILAMONEY_URL}/entities/individual-user`,
+    //   data: merchantData,
+    // };
+    // let result;
+    // try {
+    //   result = await axios(request);
+    //   console.log(result);
+    //   return result;
+    // } catch (SilaError) {
+    //   throw new Error(SilaError);
+    // }
+  }
+
   async requestKYC(userHandle, id) {
     const request = {
       method: "POST",
@@ -42,7 +57,7 @@ class SilaMoneyService {
       result = await axios(request);
       console.log(result);
     } catch (ServerlessError) {
-      console.log(ServerlessError);
+      throw new Error(ServerlessError);
     }
   }
 
@@ -68,7 +83,7 @@ class SilaMoneyService {
       console.log(result);
       return result;
     } catch (ServerlessError) {
-      console.log(ServerlessError);
+      throw new Error(ServerlessError);
     }
   }
 }

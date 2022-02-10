@@ -2866,7 +2866,28 @@ export default {
         )
         .then(async (res) => {
           console.log(res);
+          await this.updateMerchant(merchantData.handle, id);
           await this.requestSilaKYC(merchantData.handle, id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async updateMerchant(handle, id) {
+      let merchantData = {
+        user_handle: handle,
+        kyc_status: "unverified",
+      };
+      await axios
+        .put(
+          process.env.VUE_APP_API_URL + `/merchants/${id}/update/entity`,
+          merchantData,
+          {
+            headers: authHeader(),
+          }
+        )
+        .then(async (res) => {
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
