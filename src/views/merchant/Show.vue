@@ -940,6 +940,10 @@ export default {
           });
         } else {
           console.log(res);
+          Swal.fire({
+            title: "Oops! Something went wrong.",
+            icon: "error",
+          });
         }
         return res;
       } catch (error) {
