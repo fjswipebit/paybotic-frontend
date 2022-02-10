@@ -44,7 +44,18 @@
           </p>
           <p class="text-sm font-medium text-gray-500">
             KYC Status:
-            <a :class="`text-green-400`">Verified</a>
+            <a
+              :class="[
+                this.merchant.merchantInformation.kyc_status === 'verified'
+                  ? `text-green-400`
+                  : `text-red-600`,
+              ]"
+              >{{
+                this.merchant.merchantInformation.kyc_status === "verified"
+                  ? "Verified"
+                  : "Not verified"
+              }}</a
+            >
           </p>
         </div>
       </div>
@@ -75,11 +86,18 @@
               font-medium
               rounded-md
               text-white
-              bg-blue-700
-              hover:bg-blue-500
               focus:outline-none
-              focus:ring-2 focus:ring-offset-2 focus:ring-blue-500
             "
+          :class="[
+            this.merchant.merchantInformation.kyc_status === 'verified'
+              ? `bg-blue-700 hover:bg-blue-500 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`
+              : `bg-blue-300`,
+          ]"
+          :disabled="
+            this.merchant.merchantInformation.kyc_status === 'verified'
+              ? false
+              : true
+          "
         >
           Link Bank Account
         </button>
@@ -784,6 +802,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import axios from "axios";
 import moment from "moment-timezone";
 import Breadcrumbs from "@/components/Breadcrumbs.vue";
@@ -857,6 +876,7 @@ export default {
         )
         .then((response) => {
           this.merchant = response.data.data;
+          console.log(this.merchant);
         });
     },
     async getcashAdvances() {
@@ -902,7 +922,7 @@ export default {
       console.log(this.merchant);
 
       let merchantData = {
-        userHandle: this.merchant.merchantInformation.userHandle,
+        userHandle: this.merchant.merchantInformation.sila_money_user_handle,
         accountNumber: this.merchant.merchantInformation.bankAccountNumber,
         routingNumber: this.merchant.merchantInformation
           .bankAccountRountingNumber,
@@ -912,6 +932,15 @@ export default {
 
       try {
         let res = await SilaMoneyService.linkBankAccount(merchantData);
+        if (res.data.result.data.success) {
+          Swal.fire({
+            title: "Congratulations!",
+            text: "Bank successfully linked.",
+            icon: "success",
+          });
+        } else {
+          console.log(res);
+        }
         return res;
       } catch (error) {
         console.log(error);

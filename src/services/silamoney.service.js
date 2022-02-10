@@ -80,7 +80,6 @@ class SilaMoneyService {
 
     try {
       result = await axios(request);
-      console.log(result);
       return result;
     } catch (ServerlessError) {
       throw new Error(ServerlessError);
