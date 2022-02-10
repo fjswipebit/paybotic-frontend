@@ -410,13 +410,18 @@
                           >
                             <div class="py-1">
                               <MenuItem v-slot="{ active }">
-                                <router-link
+                                <a
                                   :class="[
                                     active
                                       ? 'bg-gray-100 text-gray-900'
                                       : 'text-gray-700',
                                     'group flex items-center px-4 py-2 text-sm',
                                   ]"
+                                  :href="
+                                    `/merchants/` +
+                                      merchant.merchantInformation.id +
+                                      `/show`
+                                  "
                                 >
                                   <EyeIcon
                                     class="
@@ -429,11 +434,11 @@
                                     aria-hidden="true"
                                   />
                                   View
-                                </router-link>
+                                </a>
                               </MenuItem>
                               <MenuItem v-slot="{ active }">
-                                <router-link
-                                  :to="
+                                <a
+                                  :href="
                                     `/merchants/` +
                                       merchant.merchantInformation.id +
                                       `/edit`
@@ -456,7 +461,7 @@
                                     aria-hidden="true"
                                   />
                                   Edit
-                                </router-link>
+                                </a>
                               </MenuItem>
                             </div>
                           </MenuItems>
