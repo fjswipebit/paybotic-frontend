@@ -2667,6 +2667,14 @@ export default {
       date.setDate(date.getDate() + 1);
       this.form.endDate = new Date(date).toISOString().slice(0, 10);
     },
+    "form.bankAccountRountingNumber": function(routingNumber) {
+      if (routingNumber.length > 9) {
+        this.form.bankAccountRountingNumber = this.form.bankAccountRountingNumber.substring(
+          0,
+          9
+        );
+      }
+    },
   },
   computed: {
     getStartDate() {

@@ -3,10 +3,7 @@
   <div class="p-10 h-5/6">
     <div class="md:grid md:grid-cols-3 md:gap-6 h-full">
       <div class="md:col-span-1">
-        <nav
-          aria-label="Progress"
-          class="flex flex-1 items-center"
-        >
+        <nav aria-label="Progress" class="flex flex-1 items-center">
           <ol class="overflow-hidden">
             <li
               v-for="(step, stepIdx) in steps"
@@ -28,7 +25,11 @@
                   "
                   aria-hidden="true"
                 />
-                <button @click="stepperClick(stepIdx)" class="relative flex items-start group focus:outline-none" type="button">
+                <button
+                  @click="stepperClick(stepIdx)"
+                  class="relative flex items-start group focus:outline-none"
+                  type="button"
+                >
                   <span class="h-9 flex items-center">
                     <span
                       class="
@@ -135,7 +136,11 @@
                   "
                   aria-hidden="true"
                 />
-                <button @click="stepperClick(stepIdx)" type="button" class="relative flex items-start group focus:outline-none">
+                <button
+                  @click="stepperClick(stepIdx)"
+                  type="button"
+                  class="relative flex items-start group focus:outline-none"
+                >
                   <span class="h-9 flex items-center" aria-hidden="true">
                     <span
                       class="
@@ -1458,9 +1463,19 @@ export default {
   },
   watch: {
     business_formation(value) {
-      this.business_formation = value
-      this.merchant.businessInformation.businessFormationDate = value
-    }
+      this.business_formation = value;
+      this.merchant.businessInformation.businessFormationDate = value;
+    },
+    "merchant.merchantInformation.bankAccountRountingNumber": function(
+      routingNumber
+    ) {
+      if (routingNumber.length > 9) {
+        this.merchant.merchantInformation.bankAccountRountingNumber = this.merchant.merchantInformation.bankAccountRountingNumber.substring(
+          0,
+          9
+        );
+      }
+    },
   },
   methods: {
     async getMerchantInfo() {
@@ -1473,7 +1488,9 @@ export default {
         )
         .then((response) => {
           this.merchant = response.data.data;
-          this.business_formation = moment(this.merchant.businessInformation.businessFormationDate).format('YYYY-MM-DD')
+          this.business_formation = moment(
+            this.merchant.businessInformation.businessFormationDate
+          ).format("YYYY-MM-DD");
           this.isStateRegulatory = Boolean(
             this.merchant.businessInformation.businessLicense
           );
@@ -1503,9 +1520,9 @@ export default {
     },
     stepperClick(id) {
       for (let i = 0; i < this.steps.length; i++) {
-        if(i < id) this.steps[i].status = "complete"
-        else if(i === id) this.steps[i].status = "current" 
-        else this.steps[i].status = "upcoming" 
+        if (i < id) this.steps[i].status = "complete";
+        else if (i === id) this.steps[i].status = "current";
+        else this.steps[i].status = "upcoming";
       }
       this.currentStep = id;
     },
@@ -1523,10 +1540,12 @@ export default {
         bankName: this.merchant.merchantInformation.bankName,
         bankType: this.merchant.merchantInformation.bankType,
         bankAccountNumber: this.merchant.merchantInformation.bankAccountNumber,
-        bankAccountRountingNumber:
-          this.merchant.merchantInformation.bankAccountRountingNumber,
+        bankAccountRountingNumber: this.merchant.merchantInformation
+          .bankAccountRountingNumber,
         salesAgent1: this.merchant.merchantInformation.salesAgent1,
         salesAgent2: this.merchant.merchantInformation.salesAgent2,
+        // sila_money_user_handle: this.merchant.merchantInformation.sila_money_user_handle,
+        // kyc_status: this.merchant.merchantInformation.kyc_status,
       };
 
       var corporate_info_params = {
@@ -1545,13 +1564,13 @@ export default {
         owner2FirstName: this.merchant.businessInformation.owner2FirstName,
         owner2LastName: this.merchant.businessInformation.owner2LastName,
         title: this.merchant.businessInformation.title,
-        primaryContactName:
-          this.merchant.businessInformation.primaryContactName,
+        primaryContactName: this.merchant.businessInformation
+          .primaryContactName,
         idNumber: this.merchant.businessInformation.idNumber,
         tinType: this.merchant.businessInformation.tinType,
         businessLicense: this.merchant.businessInformation.businessLicense,
-        businessLicenseState:
-          this.merchant.businessInformation.businessLicenseState,
+        businessLicenseState: this.merchant.businessInformation
+          .businessLicenseState,
         numberOfLocations: this.merchant.businessInformation.numberOfLocations,
         businessFormationDate: moment(
           this.merchant.businessInformation.businessFormationDate
@@ -1616,17 +1635,19 @@ export default {
                   Swal.fire({
                     title: "Congratulations",
                     icon: "success",
-                    text: "You have successfully updated the merchant information.",
+                    text:
+                      "You have successfully updated the merchant information.",
                     confirmButtonText: `OK`,
                   }).then((result) => {
-                    if (result.isConfirmed) {
-                      window.location.href =
-                        "/merchants/" + this.$route.params.id + "/show";
-                    }
+                    console.log(result);
+                    // if (result.isConfirmed) {
+                    //   window.location.href =
+                    //     "/merchants/" + this.$route.params.id + "/show";
+                    // }
                   });
                 });
             })
-            .catch(function (error) {
+            .catch(function(error) {
               if (error.response) {
                 console.log(error.response.data);
                 console.log(error.response.status);
