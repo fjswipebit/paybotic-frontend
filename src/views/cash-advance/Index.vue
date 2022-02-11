@@ -34,9 +34,9 @@
           <label for="email" class="sr-only">Search</label>
           <div class="mt-1 flex rounded-md shadow-sm">
             <button
-                @click="reset"
-                type="button"
-                class="
+              @click="reset"
+              type="button"
+              class="
                   inline-flex
                   items-center
                   px-4
@@ -52,13 +52,10 @@
                   focus:outline-none
                   focus:ring-2 focus:ring-offset-2 focus:ring-red-500
                 "
-              >
-                <RefreshIcon
-                  class="-ml-0.5 mr-2 h-4 w-4"
-                  aria-hidden="true"
-                />
-                Reset
-              </button>
+            >
+              <RefreshIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+              Reset
+            </button>
             <div
               class="relative flex items-stretch flex-grow focus-within:z-10"
             >
@@ -287,7 +284,7 @@
                         tracking-wider
                       "
                     >
-                       Cash Advance ID
+                      Cash Advance ID
                     </th>
                     <th
                       scope="col"
@@ -301,7 +298,7 @@
                         tracking-wider
                       "
                     >
-                       Date Applied   
+                      Date Applied
                     </th>
                     <th
                       scope="col"
@@ -315,7 +312,7 @@
                         tracking-wider
                       "
                     >
-                      Created By   
+                      Created By
                     </th>
                     <th
                       scope="col"
@@ -329,7 +326,7 @@
                         tracking-wider
                       "
                     >
-                       Date Approved   
+                      Date Approved
                     </th>
                     <th
                       scope="col"
@@ -359,51 +356,52 @@
                       class="px-6 py-4 whitespace-nowrap text-sm text-blue-500
                           font-bold"
                     >
-                    <a
-                      :href="
-                        '/cash-advance-applications/' +
-                        cash_advance.id +
-                        '/show'
-                      "
-                      >{{
-                        cash_advance.merchantId.merchantInformation.businessName
-                      }}</a>
+                      <a
+                        :href="
+                          '/cash-advance-applications/' +
+                            cash_advance.id +
+                            '/show'
+                        "
+                        >{{
+                          cash_advance.merchantId.merchantInformation
+                            .businessName
+                        }}</a
+                      >
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      {{ cash_advance.merchantId.merchantInformation.id }}
                     </td>
                     <td
-                      class="px-6 py-4 whitespace-nowrap text-sm font-medium"
+                      class="
+                        px-6
+                        py-4
+                        whitespace-nowrap
+                        text-sm text-gray-500
+                      "
+                    >
+                      {{ moment(cash_advance.startDate).format("MM/DD/YYYY") }}
+                    </td>
+                    <td
+                      class="
+                        px-6
+                        py-4
+                        whitespace-nowrap
+                        text-sm text-gray-500
+                      "
                     >
                       {{
-                        cash_advance.merchantId.merchantInformation.id
+                        moment(cash_advance.endDate)
+                          .add(1, "days")
+                          .diff(moment(cash_advance.startDate), "days")
                       }}
-                    </td>
-                    <td
-                      class="
-                        px-6
-                        py-4
-                        whitespace-nowrap
-                        text-sm text-gray-500
-                      "
-                    >
-                      {{  moment(cash_advance.startDate).format(
-                            "MM/DD/YYYY"
-                          )}}
-                    </td>
-                    <td
-                      class="
-                        px-6
-                        py-4
-                        whitespace-nowrap
-                        text-sm text-gray-500
-                      "
-                    >
-                      {{ moment(cash_advance.endDate).add(1,'days').diff(moment(cash_advance.startDate), 'days') }} days
+                      days
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
                       {{ repaymentType(cash_advance.repaymentType) }}
                     </td>
-                    
+
                     <td
                       class="
                         px-6
@@ -423,7 +421,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(cash_advance.principalAmount*cash_advance.factorRate) }}
+                      {{
+                        formatCurrency(
+                          cash_advance.principalAmount * cash_advance.factorRate
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -443,7 +445,12 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(cash_advance.principalAmount*(cash_advance.originationFee/100)) }}
+                      {{
+                        formatCurrency(
+                          cash_advance.principalAmount *
+                            (cash_advance.originationFee / 100)
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -453,46 +460,39 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ cash_advance.dailyPaybackAmount ?? '0.00' }}
+                      {{ cash_advance.dailyPaybackAmount ?? "0.00" }}
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      {{ cash_advance.id }}
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      {{ moment(cash_advance.createdAt).format("MM/DD/YYYY") }}
+                    </td>
+                    <td
+                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    >
+                      {{ cash_advance.merchantId.user.name }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
                       {{
-                        cash_advance.id
+                        cash_advance.updatedAt
+                          ? moment(cash_advance.updatedAt).format("MM/DD/YYYY")
+                          : "-"
                       }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
                       {{
-                        moment(cash_advance.createdAt).format(
-                            "MM/DD/YYYY"
-                          )
-                      }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{
-                        cash_advance.merchantId.user.name
-                      }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{
-                         
-                        cash_advance.updatedAt ? moment(cash_advance.updatedAt).format(
-                            "MM/DD/YYYY"
-                          ) : '-'
-                      }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{
-                        cash_advance.updatedBy ? cash_advance.updatedBy.name : '-'
+                        cash_advance.updatedBy
+                          ? cash_advance.updatedBy.name
+                          : "-"
                       }}
                     </td>
                     <td class="pr-6">
@@ -550,11 +550,11 @@
                           >
                             <div class="py-1">
                               <MenuItem v-slot="{ active }">
-                                <router-link
-                                  :to="
+                                <a
+                                  :href="
                                     `/cash-advances/` +
-                                    cash_advance.id +
-                                    `/show`
+                                      cash_advance.id +
+                                      `/show`
                                   "
                                   :class="[
                                     active
@@ -574,16 +574,16 @@
                                     aria-hidden="true"
                                   />
                                   View Information
-                                </router-link>
+                                </a>
                               </MenuItem>
                             </div>
                             <div class="py-1">
                               <MenuItem v-slot="{ active }">
-                                <router-link
-                                  :to="
+                                <a
+                                  :href="
                                     `/cash-advances/` +
-                                    cash_advance.id +
-                                    `/show?amortsched=true`
+                                      cash_advance.id +
+                                      `/show?amortsched=true`
                                   "
                                   :class="[
                                     active
@@ -603,7 +603,7 @@
                                     aria-hidden="true"
                                   />
                                   View Amortization Schedule
-                                </router-link>
+                                </a>
                               </MenuItem>
                             </div>
                           </MenuItems>
@@ -660,7 +660,7 @@ import {
   EyeIcon,
   CalendarIcon,
   DocumentDownloadIcon,
-  RefreshIcon
+  RefreshIcon,
 } from "@heroicons/vue/solid";
 
 const statusStyles = {
@@ -683,7 +683,7 @@ export default {
     CalendarIcon,
     Pagination,
     DocumentDownloadIcon,
-    RefreshIcon
+    RefreshIcon,
   },
   setup() {
     return {
@@ -703,7 +703,7 @@ export default {
   },
 
   methods: {
-    reset(){
+    reset() {
       this.search = null;
       this.getCashAdvances();
     },
@@ -735,7 +735,8 @@ export default {
       await axios
         .post(
           process.env.VUE_APP_API_URL +
-            `/cash-advance-applications/export?status=approved`,'',
+            `/cash-advance-applications/export?status=approved`,
+          "",
           {
             headers: authHeader(),
           }
