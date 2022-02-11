@@ -28,16 +28,20 @@
                   </p>
                 </div>
                 <div class="ml-4 mt-4 flex-shrink-0">
-                  <router-link v-show="cash_advance.status == 'pending' && cash_advance.merchantId.user.email == user_email"
-                    :to="
+                  <a
+                    v-show="
+                      cash_advance.status == 'pending' &&
+                        cash_advance.merchantId.user.email == user_email
+                    "
+                    :href="
                       `/cash-advance-applications/` + cash_advance.id + `/edit`
                     "
                     class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2"
                   >
                     Edit
-                  </router-link>
-                  <router-link
-                    :to="
+                  </a>
+                  <a
+                    :href="
                       `/merchants/` + merchant.merchantInformation.id + `/show`
                     "
                     class="
@@ -59,7 +63,7 @@
                     "
                   >
                     View Merchant Information
-                  </router-link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -224,9 +228,7 @@
                           moment(cash_advance.startDate).format("MM/DD/YYYY")
                         }}
                         to
-                        {{
-                          moment(cash_advance.endDate).format("MM/DD/YYYY")
-                        }}
+                        {{ moment(cash_advance.endDate).format("MM/DD/YYYY") }}
                       </span>
                       <span class="text-gray-400"> ({{ dateDiff }} days)</span>
                     </dd>
@@ -1075,7 +1077,7 @@ export default {
     this.getAmortizationSched();
     this.getPayments();
     this.moment = moment;
-    this.user_email = localStorage.getItem('user_email');
+    this.user_email = localStorage.getItem("user_email");
   },
   mounted() {
     if (this.$route.query.amortsched === "true") this.selectTab(1);
@@ -1176,7 +1178,7 @@ export default {
           window.location.href =
             "/cash-advances/" + this.$route.params.id + "/show";
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error.response) {
             // Request made and server responded
             console.log(error.response.data);
@@ -1196,7 +1198,8 @@ export default {
         .post(
           process.env.VUE_APP_API_URL +
             `/amortization-schedules/` +
-            this.$route.params.id, '',
+            this.$route.params.id,
+          "",
           {
             headers: authHeader(),
           }
