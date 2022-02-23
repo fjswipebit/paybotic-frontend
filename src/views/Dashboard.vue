@@ -1,25 +1,52 @@
 <template>
- <div class="px-4 mt-6 sm:px-6 lg:px-8">
+  <div class="px-4 mt-6 sm:px-6 lg:px-8">
     <div class="md:hidden">
       <label for="tabs" class="sr-only">Select a tab</label>
       <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-      <select id="tabs" name="tabs" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-        <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{ tab.name }}</option>
+      <select
+        id="tabs"
+        name="tabs"
+        class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+      >
+        <option v-for="tab in tabs" :key="tab.name" :selected="tab.current">{{
+          tab.name
+        }}</option>
       </select>
     </div>
     <div class="hidden md:block">
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-          <a v-for="(tab, index) in tabs" :key="tab.name" href="#" @click="selectTab(index)" :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200', 'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm']" :aria-current="tab.current ? 'page' : undefined">
+          <a
+            v-for="(tab, index) in tabs"
+            :key="tab.name"
+            href="#"
+            @click="selectTab(index)"
+            :class="[
+              tab.current
+                ? 'border-indigo-500 text-indigo-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200',
+              'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm',
+            ]"
+            :aria-current="tab.current ? 'page' : undefined"
+          >
             {{ tab.name }}
-            <span v-if="tab.count" :class="[tab.current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-900', 'hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block']">{{ tab.count }}</span>
+            <span
+              v-if="tab.count"
+              :class="[
+                tab.current
+                  ? 'bg-indigo-100 text-indigo-600'
+                  : 'bg-gray-100 text-gray-900',
+                'hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block',
+              ]"
+              >{{ tab.count }}</span
+            >
           </a>
         </nav>
       </div>
     </div>
   </div>
   <!-- Projects table (small breakpoint and up) -->
-  <div class="mt-8">  
+  <div class="mt-8">
     <div class="align-middle" v-show="tabs[0].current">
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto">
@@ -136,9 +163,7 @@
                         text-gray-900
                       "
                     >
-                      {{
-                        pending_ca.merchantId.merchantInformation.businessName
-                      }}
+                      {{ pending_ca.merchantInformation.businessName }}
                     </td>
                     <td
                       class="
@@ -321,8 +346,8 @@
                       <router-link
                         :to="
                           `/merchants/` +
-                          new_merchant.merchantInformation.id +
-                          `/show`
+                            new_merchant.merchantInformation.id +
+                            `/show`
                         "
                         class="text-indigo-600 hover:text-indigo-900"
                         >View</router-link
@@ -445,7 +470,10 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="cash_advance in cash_advances" :key="cash_advance.uuid">
+                  <tr
+                    v-for="cash_advance in cash_advances"
+                    :key="cash_advance.uuid"
+                  >
                     <td
                       class="
                         px-6
@@ -468,9 +496,7 @@
                         text-gray-900
                       "
                     >
-                      {{
-                        cash_advance.merchantId.merchantInformation.businessName
-                      }}
+                      {{ cash_advance.merchantInformation.businessName }}
                     </td>
                     <td
                       class="
@@ -666,7 +692,7 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="due in dues" :key="due.id">
+                  <tr v-for="due in payments_today" :key="due.id">
                     <td
                       class="
                         px-6
@@ -677,12 +703,12 @@
                         text-gray-900
                       "
                     >
-                      {{ due.cash_advance_id }}
+                      {{ due.cashAdvanceApplicationId }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ due.merchant_name }}
+                      {{ due.merchantInformation.name }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
@@ -697,7 +723,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(due.amount_due) }}
+                      {{
+                        formatCurrency(
+                          due?.amortizationScheduleId?.total_daily_repayment
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -707,7 +737,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(due.amount_paid) }}
+                      {{
+                        formatCurrency(
+                          due?.amortizationScheduleId?.actual_amount_paid
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -717,7 +751,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(due.remaining_principal) }}
+                      {{
+                        formatCurrency(
+                          due?.amortizationScheduleId?.remaining_principal
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -727,7 +765,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(due.remaining_total_balance) }}
+                      {{
+                        formatCurrency(
+                          due?.amortizationScheduleId?.remaining_total_balance
+                        )
+                      }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
@@ -896,9 +938,7 @@
                         text-gray-900
                       "
                     >
-                      {{
-                        top_ca.merchantId.merchantInformation.businessName
-                      }}
+                      {{ top_ca.merchantInformation.businessName }}
                     </td>
                     <td
                       class="
@@ -1100,8 +1140,8 @@
                       <router-link
                         :to="
                           `/merchants/` +
-                          top_merchant.merchantInformation.id +
-                          `/show`
+                            top_merchant.merchantInformation.id +
+                            `/show`
                         "
                         class="text-indigo-600 hover:text-indigo-900"
                         >View</router-link
@@ -1147,19 +1187,19 @@ const paymentStatusStyles = {
 };
 
 const tabs = [
-  { name: 'Pending MCAs', href: '#', count: '0', current: true },
-  { name: 'New Merchants', href: '#', count: '0', current: false },
-  { name: 'New Cash Advances', href: '#', count: '0', current: false },
-  { name: 'New Payments', href: '#', count: '0', current: false },
-  { name: 'Top 10 Cash Advance', href: '#', current: false },
-  { name: 'Top 10 Merchants', href: '#', current: false },
+  { name: "Pending MCAs", href: "#", count: "0", current: true },
+  { name: "New Merchants", href: "#", count: "0", current: false },
+  { name: "New Cash Advances", href: "#", count: "0", current: false },
+  { name: "New Payments", href: "#", count: "0", current: false },
+  { name: "Top 10 Cash Advance", href: "#", current: false },
+  { name: "Top 10 Merchants", href: "#", current: false },
 ];
 
 export default {
   setup() {
     return {
       paymentStatusStyles,
-      tabs
+      tabs,
     };
   },
   data() {
@@ -1170,7 +1210,7 @@ export default {
       cash_advances: [],
       payments_today: [],
       top_mcas: [],
-      top_merchants: []
+      top_merchants: [],
     };
   },
   created() {
@@ -1191,11 +1231,14 @@ export default {
           var count = 0;
 
           merchants.map((merchant) => {
-            
             this.top_merchants.push(merchant);
-            this.top_merchants.sort(
-                (a, b) => b.merchantInformation.totalMCA - a.merchantInformation.totalMCA
-              ).splice(10);
+            this.top_merchants
+              .sort(
+                (a, b) =>
+                  b.merchantInformation.totalMCA -
+                  a.merchantInformation.totalMCA
+              )
+              .splice(10);
 
             if (
               moment(merchant.merchantInformation.createdAt).format(
@@ -1210,8 +1253,8 @@ export default {
             }
           });
           console.log(this.top_merchants);
-          
-          tabs[1].count = count !== 0 ? count : '0';
+
+          tabs[1].count = count !== 0 ? count : "0";
         });
     },
     async getPendingCashAdvance() {
@@ -1224,7 +1267,8 @@ export default {
         .then((response) => {
           this.pending_cas = response.data.data;
           this.pending_cas.sort((a, b) => b.id - a.id);
-          tabs[0].count = this.pending_cas.length > 0 ? this.pending_cas.length : '0';
+          tabs[0].count =
+            this.pending_cas.length > 0 ? this.pending_cas.length : "0";
         });
     },
     async getCashAdvance() {
@@ -1239,24 +1283,20 @@ export default {
           var count = 0;
           cas.map((ca) => {
             this.top_mcas.push(ca);
-            this.top_mcas.sort(
-                (a, b) => b.principalAmount - a.principalAmount
-              ).splice(10);
+            this.top_mcas
+              .sort((a, b) => b.principalAmount - a.principalAmount)
+              .splice(10);
 
             if (
-              moment(ca.updatedAt).format(
-                "YYYY-MM-DD"
-              ) === moment().format("YYYY-MM-DD")
+              moment(ca.updatedAt).format("YYYY-MM-DD") ===
+              moment().format("YYYY-MM-DD")
             ) {
               this.cash_advances.push(ca);
-              this.cash_advances.sort(
-                (a, b) => b.id - a.id
-              );
+              this.cash_advances.sort((a, b) => b.id - a.id);
               return count++;
             }
-            
           });
-          tabs[2].count = count !== 0 ? count : '0';
+          tabs[2].count = count !== 0 ? count : "0";
         });
     },
     async getPayments() {
@@ -1266,27 +1306,25 @@ export default {
         })
         .then((response) => {
           var payments = response.data.data;
+          console.log(response);
           var count = 0;
           payments.map((payment) => {
             if (
-              moment(payment.createdAt).format(
-                "YYYY-MM-DD"
-              ) === moment().format("YYYY-MM-DD")
+              moment(payment.createdAt).format("YYYY-MM-DD") ===
+              moment().format("YYYY-MM-DD")
             ) {
               this.payments_today.push(payment);
-              this.payments_today.sort(
-                (a, b) => b.id - a.id
-              );
+              this.payments_today.sort((a, b) => b.id - a.id);
               return count++;
             }
           });
-          tabs[3].count = count  !== 0 ? count : '0';
+          tabs[3].count = count !== 0 ? count : "0";
         });
     },
-    selectTab(i){
+    selectTab(i) {
       tabs.forEach((tab, index) => {
-        if(i === index) tab.current = true
-        else tab.current = false
+        if (i === index) tab.current = true;
+        else tab.current = false;
       });
     },
     repaymentType(type) {

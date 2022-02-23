@@ -51,17 +51,12 @@
             focus:ring-2 focus:ring-offset-2 focus:ring-red-500
           "
         >
-          <RefreshIcon
-            class="-ml-0.5 mr-2 h-4 w-4"
-            aria-hidden="true"
-          />
+          <RefreshIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
           Reset
         </button>
-         <div
-            class="relative flex items-stretch flex-grow focus-within:z-10"
-          >
-            <div
-              class="
+        <div class="relative flex items-stretch flex-grow focus-within:z-10">
+          <div
+            class="
                 absolute
                 inset-y-0
                 left-0
@@ -70,13 +65,13 @@
                 items-center
                 pointer-events-none
               "
-            >
-              <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
-            </div>
-            <input
-              type="text"
-              v-model="search"
-              class="
+          >
+            <SearchIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </div>
+          <input
+            type="text"
+            v-model="search"
+            class="
                 focus:ring-indigo-500
                 focus:border-indigo-500
                 block
@@ -86,9 +81,9 @@
                 sm:text-sm
                 border-gray-300
               "
-              placeholder="Search"
-            />
-          </div>
+            placeholder="Search"
+          />
+        </div>
         <button
           class="
             -ml-px
@@ -175,7 +170,7 @@
                         tracking-wider
                       "
                     >
-                      Daily Sales
+                      Amount Due
                     </th>
                     <th
                       scope="col"
@@ -313,7 +308,7 @@
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ payment.merchantId.merchantInformation.businessName }}
+                      {{ payment.merchantInformation.businessName }}
                     </td>
                     <td
                       class="
@@ -323,7 +318,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(payment.dailySales) }}
+                      {{
+                        formatCurrency(
+                          payment.amortizationScheduleId.total_daily_repayment
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -333,7 +332,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(payment.withHoldingAmount) }}
+                      {{
+                        formatCurrency(
+                          payment.amortizationScheduleId.actual_amount_paid
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -343,7 +346,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ formatCurrency(payment.withHoldingAmount) }}
+                      {{
+                        formatCurrency(
+                          payment.amortizationScheduleId.actual_amount_paid
+                        )
+                      }}
                     </td>
                     <td
                       class="
@@ -378,7 +385,7 @@
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ payment.durationOfCashAdvance + ' days' }}
+                      {{ payment.durationOfCashAdvance + " days" }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
@@ -451,7 +458,12 @@ import axios from "axios";
 import moment from "moment-timezone";
 import Pagination from "@/components/Pagination";
 import authHeader from "../services/auth-header";
-import { SearchIcon, FilterIcon, DocumentDownloadIcon, RefreshIcon } from "@heroicons/vue/solid";
+import {
+  SearchIcon,
+  FilterIcon,
+  DocumentDownloadIcon,
+  RefreshIcon,
+} from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -459,8 +471,7 @@ export default {
     FilterIcon,
     Pagination,
     DocumentDownloadIcon,
-    RefreshIcon
-
+    RefreshIcon,
   },
   data() {
     return {
@@ -470,7 +481,7 @@ export default {
     };
   },
   methods: {
-    reset(){
+    reset() {
       this.search = null;
       this.getPayments();
     },
@@ -498,8 +509,8 @@ export default {
     async exportToExcel() {
       await axios
         .post(
-          process.env.VUE_APP_API_URL +
-            `/cash-advance-payments/export`,'',
+          process.env.VUE_APP_API_URL + `/cash-advance-payments/export`,
+          "",
           {
             headers: authHeader(),
           }

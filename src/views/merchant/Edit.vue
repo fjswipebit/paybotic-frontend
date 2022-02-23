@@ -1639,11 +1639,10 @@ export default {
                       "You have successfully updated the merchant information.",
                     confirmButtonText: `OK`,
                   }).then((result) => {
-                    console.log(result);
-                    // if (result.isConfirmed) {
-                    //   window.location.href =
-                    //     "/merchants/" + this.$route.params.id + "/show";
-                    // }
+                    if (result.isConfirmed) {
+                      window.location.href =
+                        "/merchants/" + this.$route.params.id + "/show";
+                    }
                   });
                 });
             })

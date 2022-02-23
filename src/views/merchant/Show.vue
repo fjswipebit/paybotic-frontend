@@ -74,6 +74,7 @@
         "
       >
         <button
+          v-if="this.merchant.merchantInformation.is_bank_linked === 0"
           @click="handleLinkingBankAccount()"
           type="button"
           class="
@@ -101,6 +102,24 @@
         >
           Link Bank Account
         </button>
+        <div
+          v-if="this.merchant.merchantInformation.is_bank_linked === 1"
+          class="
+              inline-flex
+              items-center
+              px-4
+              py-2
+              border border-transparent
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              focus:outline-none
+              bg-blue-700 
+            "
+        >
+          Bank Linked successfully
+        </div>
         <button
           type="button"
           class="
@@ -898,7 +917,10 @@ export default {
     },
     createApplication() {
       localStorage.merchantEmail = this.merchant.merchantInformation.email;
-      this.$router.push({ name: "Create New Cash Advance Application" });
+      this.$router.push({
+        name: "Create Cash Advance Application",
+        replace: true,
+      });
     },
     selectTab(i, type) {
       var tabIndex = i;
@@ -935,11 +957,32 @@ export default {
       try {
         let res = await SilaMoneyService.linkBankAccount(merchantData);
         if (res.data.result.data.success) {
-          Swal.fire({
-            title: "Congratulations!",
-            text: "Bank successfully linked.",
-            icon: "success",
-          });
+          let merchant = {
+            user_handle: this.merchant.merchantInformation
+              .sila_money_user_handle,
+            kyc_status: "verified",
+            is_bank_linked: true,
+          };
+          await axios
+            .put(
+              process.env.VUE_APP_API_URL +
+                `/merchants/${this.merchant.merchantInformation.id}/update/entity`,
+              merchant,
+              {
+                headers: authHeader(),
+              }
+            )
+            .then((response) => {
+              console.log(response);
+              Swal.fire({
+                title: "Congratulations!",
+                text: "Bank successfully linked.",
+                icon: "success",
+              });
+              setTimeout(() => {
+                window.location.reload();
+              }, 1000);
+            });
         } else {
           console.log(res);
           Swal.fire({

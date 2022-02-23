@@ -2885,6 +2885,7 @@ export default {
       let merchantData = {
         user_handle: handle,
         kyc_status: "unverified",
+        is_bank_linked: false,
       };
       await axios
         .put(

@@ -362,14 +362,11 @@
                             cash_advance.id +
                             '/show'
                         "
-                        >{{
-                          cash_advance.merchantId.merchantInformation
-                            .businessName
-                        }}</a
+                        >{{ cash_advance.merchantInformation.businessName }}</a
                       >
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      {{ cash_advance.merchantId.merchantInformation.id }}
+                      {{ cash_advance.merchantInformation.id }}
                     </td>
                     <td
                       class="
@@ -475,7 +472,7 @@
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ cash_advance.merchantId.user.name }}
+                      {{ cash_advance.merchantInformation.name }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
@@ -631,10 +628,10 @@
                 <tfoot>
                   <tr>
                     <td colspan="17">
-                      <Pagination
+                      <!-- <Pagination
                         :pagination="pagination"
                         @update="getCashAdvances"
-                      />
+                      /> -->
                     </td>
                   </tr>
                 </tfoot>
@@ -650,7 +647,7 @@
 <script>
 import axios from "axios";
 import moment from "moment-timezone";
-import Pagination from "@/components/Pagination";
+// import Pagination from "@/components/Pagination";
 import authHeader from "@/services/auth-header";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
 import {
@@ -681,7 +678,7 @@ export default {
     DotsVerticalIcon,
     EyeIcon,
     CalendarIcon,
-    Pagination,
+    // Pagination,
     DocumentDownloadIcon,
     RefreshIcon,
   },
@@ -710,16 +707,16 @@ export default {
     async getCashAdvances(page, search) {
       var url =
         process.env.VUE_APP_API_URL +
-        `/cash-advance-applications?status=approved&order=desc&per_page=10&page=1`;
+        `/cash-advance-applications?status=approved&order=desc&page=1`;
       if (page)
         url =
           process.env.VUE_APP_API_URL +
-          `/cash-advance-applications?status=approved&order=desc&per_page=10&page=` +
+          `/cash-advance-applications?status=approved&order=desc&page=` +
           page;
       else if (search)
         url =
           process.env.VUE_APP_API_URL +
-          `/cash-advance-applications?status=approved&order=desc&per_page=10&page=1&search=` +
+          `/cash-advance-applications?status=approved&order=desc&page=1&search=` +
           search;
 
       axios
@@ -727,7 +724,8 @@ export default {
           headers: authHeader(),
         })
         .then((response) => {
-          this.cash_advances = response.data.data.data;
+          console.log(response, response.data.data);
+          this.cash_advances = response.data.data;
           this.pagination = response.data.data;
         });
     },

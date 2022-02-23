@@ -31,7 +31,7 @@
                   <a
                     v-show="
                       cash_advance.status == 'pending' &&
-                        cash_advance.merchantId.user.email == user_email
+                        cash_advance.merchantInformation.email == user_email
                     "
                     :href="
                       `/cash-advance-applications/` + cash_advance.id + `/edit`
@@ -41,9 +41,7 @@
                     Edit
                   </a>
                   <a
-                    :href="
-                      `/merchants/` + merchant.merchantInformation.id + `/show`
-                    "
+                    :href="`/merchants/` + merchant.id + `/show`"
                     class="
                       relative
                       inline-flex
@@ -126,7 +124,7 @@
                       Merchant ID
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                      {{ merchant.merchantInformation.id }}
+                      {{ merchant.id }}
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
@@ -134,7 +132,7 @@
                       Business Name (DBA)
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                      {{ merchant.merchantInformation.businessName }}
+                      {{ merchant.businessName }}
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
@@ -150,7 +148,7 @@
                       Legal Name
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                      {{ merchant.merchantInformation.name }}
+                      {{ merchant.name }}
                     </dd>
                   </div>
                   <div
@@ -837,7 +835,7 @@
                                   text-gray-900
                                 "
                               >
-                                {{ amortization_scheds.length + (index + 1) }}
+                                {{ amortization_scheds?.length + (index + 1) }}
                               </td>
 
                               <td
@@ -1120,8 +1118,9 @@ export default {
           }
         )
         .then((response) => {
+          console.log(response);
           this.cash_advance = response.data.data;
-          this.merchant = response.data.data.merchantId;
+          this.merchant = response.data.data.merchantInformation;
         });
     },
     async getPayments() {
@@ -1209,11 +1208,15 @@ export default {
         });
     },
     selectTab(i, type) {
+      // if(this.$route.fullPath.includes("false") ){
+
+      // }
       var tabIndex = i;
       if (type === "select") tabIndex = event.target.options.selectedIndex;
       this.tabs.forEach((tab, index) => {
         if (index === tabIndex) tab.current = true;
         else tab.current = false;
+        console.log(index === tabIndex, index, tabIndex);
       });
     },
     formatCurrency(value) {

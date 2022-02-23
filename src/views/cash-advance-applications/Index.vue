@@ -26,8 +26,13 @@
             <PlusIcon class="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
             Create New Application
           </a>
-          <form enctype="multipart/form-data" >
-            <input type="file" @change="onFilePicked" ref="fileInput" style="display: none">
+          <form enctype="multipart/form-data">
+            <input
+              type="file"
+              @change="onFilePicked"
+              ref="fileInput"
+              style="display: none"
+            />
             <a
               href="#"
               @click="onPickFile"
@@ -53,10 +58,10 @@
             </a>
           </form>
           <div>
-          <button
-            @click="exportToExcel"
-            type="button"
-            class="
+            <button
+              @click="exportToExcel"
+              type="button"
+              class="
               inline-flex
               items-center
               px-4
@@ -71,14 +76,14 @@
               focus:outline-none
               focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500
             "
-          >
-            <DocumentDownloadIcon
-              class="-ml-0.5 mr-2 h-4 w-4"
-              aria-hidden="true"
-            />
-            Export Table
-          </button>
-        </div>
+            >
+              <DocumentDownloadIcon
+                class="-ml-0.5 mr-2 h-4 w-4"
+                aria-hidden="true"
+              />
+              Export Table
+            </button>
+          </div>
         </div>
         <div class="flex justify-end">
           <div class="max-w-sm w-full">
@@ -174,7 +179,7 @@
                       >
                         Business Name (DBA)
                       </th>
-                     
+
                       <th
                         scope="col"
                         class="
@@ -355,16 +360,13 @@
                         <a
                           :href="
                             '/merchants/' +
-                            application.merchantId.merchantInformation.id +
-                            '/show'
+                              application.merchantInformation.id +
+                              '/show'
                           "
-                          >{{
-                            application.merchantId.merchantInformation
-                              .businessName
-                          }}</a
+                          >{{ application.merchantInformation.businessName }}</a
                         >
                       </td>
-                    
+
                       <td
                         class="
                           px-6
@@ -445,13 +447,9 @@
                           text-sm text-gray-500 text-right
                         "
                       >
-                      
-                        {{ moment(application.startDate).format(
-                            "MM/DD/YYYY"
-                          ) }} - 
-                        {{ moment(application.endDate).format(
-                            "MM/DD/YYYY"
-                          )  }} 
+                        {{ moment(application.startDate).format("MM/DD/YYYY") }}
+                        -
+                        {{ moment(application.endDate).format("MM/DD/YYYY") }}
                       </td>
                       <td
                         class="
@@ -461,7 +459,7 @@
                           text-sm text-gray-500 text-right
                         "
                       >
-                        {{ application.rejectReason ?? '-' }}
+                        {{ application.rejectReason ?? "-" }}
                       </td>
                       <td
                         class="
@@ -471,7 +469,11 @@
                           text-sm text-gray-500 text-right
                         "
                       >
-                        {{ application.updatedBy ? application.updatedBy.name : '-' }}
+                        {{
+                          application.updatedBy
+                            ? application.updatedBy.name
+                            : "-"
+                        }}
                       </td>
                       <td
                         class="
@@ -481,9 +483,12 @@
                           text-sm text-gray-500 text-right
                         "
                       >
-                        {{ application.updatedAt && application.status == 'rejected' ? moment(application.updatedAt).format(
-                            "MM/DD/YYYY")  : '-'
-                        }}                       
+                        {{
+                          application.updatedAt &&
+                          application.status == "rejected"
+                            ? moment(application.updatedAt).format("MM/DD/YYYY")
+                            : "-"
+                        }}
                       </td>
                       <td
                         class="
@@ -493,7 +498,11 @@
                           text-sm text-gray-500 text-right
                         "
                       >
-                        {{ application.createdBy ? application.createdBy.name : '-' }}
+                        {{
+                          application.createdBy
+                            ? application.createdBy.name
+                            : "-"
+                        }}
                       </td>
                       <td
                         class="
@@ -506,7 +515,6 @@
                         "
                       >
                         <Menu
-                          
                           as="div"
                           class="relative flex justify-end items-center"
                         >
@@ -567,8 +575,8 @@
                                   <router-link
                                     :to="
                                       `/cash-advance-applications/` +
-                                      application.id +
-                                      `/show`
+                                        application.id +
+                                        `/show`
                                     "
                                     :class="[
                                       active
@@ -590,12 +598,20 @@
                                     View Information
                                   </router-link>
                                 </MenuItem>
-                                <MenuItem v-show="(application.status == 'pending' && application.createdBy ? application.createdBy.email : null == user_email) || user_role != 'employee'">
+                                <MenuItem
+                                  v-show="
+                                    (application.status == 'pending' &&
+                                    application.createdBy
+                                      ? application.createdBy.email
+                                      : null == user_email) ||
+                                      user_role != 'employee'
+                                  "
+                                >
                                   <router-link
                                     :to="
                                       `/cash-advance-applications/` +
-                                      application.id +
-                                      `/edit`
+                                        application.id +
+                                        `/edit`
                                     "
                                     :class="[
                                       active
@@ -618,7 +634,7 @@
                                   </router-link>
                                 </MenuItem>
                                 <MenuItem
-                                  v-if='user_role != "employee"'
+                                  v-if="user_role != 'employee'"
                                   v-slot="{ active }"
                                   v-show="application.status == 'pending'"
                                 >
@@ -648,7 +664,7 @@
                                   </button>
                                 </MenuItem>
                                 <MenuItem
-                                  v-if='user_role != "employee"'
+                                  v-if="user_role != 'employee'"
                                   v-slot="{ active }"
                                   v-show="application.status == 'pending'"
                                 >
@@ -737,7 +753,7 @@ import {
   TrashIcon,
   UploadIcon,
   DocumentDownloadIcon,
-  PencilAltIcon
+  PencilAltIcon,
 } from "@heroicons/vue/solid";
 
 export default {
@@ -754,7 +770,7 @@ export default {
     TrashIcon,
     UploadIcon,
     DocumentDownloadIcon,
-    PencilAltIcon
+    PencilAltIcon,
     // Pagination
   },
   data() {
@@ -769,8 +785,8 @@ export default {
   mounted() {
     this.getCashAdvanceApplications();
     this.moment = moment;
-    this.user_role = localStorage.getItem('user_role');
-    this.user_email = localStorage.getItem('user_email');
+    this.user_role = localStorage.getItem("user_role");
+    this.user_email = localStorage.getItem("user_email");
   },
   methods: {
     formatCurrency(value) {
@@ -788,16 +804,16 @@ export default {
     async getCashAdvanceApplications(page, search) {
       var url =
         process.env.VUE_APP_API_URL +
-        `/cash-advance-applications?order=desc&per_page=100&page=1`;
+        `/cash-advance-applications?order=desc&page=1`;
       if (page)
         url =
           process.env.VUE_APP_API_URL +
-          `/cash-advance-applications?order=desc&per_page=100&page=` +
+          `/cash-advance-applications?order=desc&page=` +
           page;
       else if (search)
         url =
           process.env.VUE_APP_API_URL +
-          `/cash-advance-applications?order=desc&per_page=100&page=1&search=` +
+          `/cash-advance-applications?order=desc&page=1&search=` +
           search;
 
       axios
@@ -808,126 +824,129 @@ export default {
           headers: authHeader(),
         })
         .then((response) => {
-          this.cash_advance_application = response.data.data.data;
-          this.cash_advance_application.sort(
-                (a, b) => b.id - a.id
-              );
+          this.cash_advance_application = response.data.data;
+          console.log(response.data.data, url);
+          this.cash_advance_application.sort((a, b) => b.id - a.id);
           this.pagination = response.data.data;
           console.log(this.cash_advance_application, this.pagination);
         });
     },
     async changeStatusTo(currentStatus, id) {
       let reason = null;
-      if (currentStatus == 'rejected') {
-         const { value: text }  = await Swal.fire({
-          input: 'textarea',
-          inputLabel: 'Why do you want to reject this MCA?',
-          inputPlaceholder: 'Type your reason here...',
+      if (currentStatus == "rejected") {
+        const { value: text } = await Swal.fire({
+          input: "textarea",
+          inputLabel: "Why do you want to reject this MCA?",
+          inputPlaceholder: "Type your reason here...",
           inputAttributes: {
-            'aria-label': 'Type your reason here'
+            "aria-label": "Type your reason here",
           },
-          showCancelButton: true
-        })
+          showCancelButton: true,
+        });
         reason = text;
       }
-      console.log(reason,currentStatus, id)
-      if(reason || currentStatus == 'approved'){
+      console.log(reason, currentStatus, id);
+      if (reason || currentStatus == "approved") {
+        axios
+          .put(
+            process.env.VUE_APP_API_URL + `/cash-advance-applications/` + id,
+            {
+              status: currentStatus,
+              rejectReason: reason,
+            },
+            { headers: authHeader() }
+          )
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              title: "Well done!",
+              text:
+                "You have successfuly " +
+                currentStatus +
+                " the cash advance application",
+              icon: "success",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "/cash-advance-applications";
+              }
+            });
+          })
+          .catch(function(error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              Swal.fire({
+                title: "Oops! Something went wrong.",
+                text: error.response.data.message,
+                icon: "error",
+              });
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Error", error.message);
+            }
+          });
+      }
+    },
+    onPickFile() {
+      this.$refs.fileInput.click();
+    },
+    onFilePicked(event) {
+      var formData = new FormData();
+      formData.append("mca", event.target.files[0]);
 
       axios
-        .put(
-          process.env.VUE_APP_API_URL + `/cash-advance-applications/` + id,
-          {
-            status: currentStatus,
-            rejectReason: reason
-          },
+        .post(
+          process.env.VUE_APP_API_URL +
+            `/cash-advance-applications/import/file`,
+          formData,
           { headers: authHeader() }
         )
         .then((response) => {
           console.log(response);
           Swal.fire({
-            title: "Well done!",
-            text:
-              "You have successfuly " +
-              currentStatus +
-              " the cash advance application",
+            title: "Congratulations!",
+            text: "You have successfully imported MCAs",
             icon: "success",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              window.location.href = "/cash-advance-applications";
-            }
           });
         })
-        .catch(function (error) {
+        .catch(function(error) {
           if (error.response) {
-            // Request made and server responded
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error.response);
             Swal.fire({
               title: "Oops! Something went wrong.",
-              text: error.response.data.message,
+              text: error.response.data.errors
+                ? error.response.data.errors[0]
+                : error.response.data.message,
               icon: "error",
             });
           } else if (error.request) {
-            // The request was made but no response was received
             console.log(error.request);
+            Swal.fire({
+              title: "Oops! Something went wrong.",
+              text: error.request,
+              icon: "error",
+            });
           } else {
-            // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            console.log("Error", error);
+            Swal.fire({
+              title: "Oops! Something went wrong.",
+              text: error,
+              icon: "error",
+            });
           }
         });
-      }
-
-    },
-    onPickFile () {
-      this.$refs.fileInput.click()
-    },
-    onFilePicked (event) {
-
-      var formData = new FormData();
-      formData.append("mca", event.target.files[0]);
-
-      axios.post(process.env.VUE_APP_API_URL+`/cash-advance-applications/import/file`,formData,
-                { headers: authHeader() })
-            .then((response) => {
-              console.log(response)                
-              Swal.fire({
-                  title: 'Congratulations!',
-                  text:  'You have successfully imported MCAs',
-                  icon:  'success'
-              }); 
-
-            }).catch(function (error) {
-                if (error.response) {
-                    console.log(error.response);
-                    Swal.fire({
-                        title: 'Oops! Something went wrong.',
-                        text:   error.response.data.errors ? error.response.data.errors[0] : error.response.data.message,
-                        icon: 'error'
-                    }); 
-                } else if (error.request) {
-                    console.log(error.request);
-                     Swal.fire({
-                        title: 'Oops! Something went wrong.',
-                        text:   error.request,
-                        icon: 'error'
-                    }); 
-                } else {
-                    console.log('Error', error);
-                    Swal.fire({
-                        title: 'Oops! Something went wrong.',
-                        text:   error,
-                        icon: 'error'
-                    }); 
-                }
-
-            });
     },
     async exportToExcel() {
       await axios
         .post(
           process.env.VUE_APP_API_URL +
-            `/cash-advance-applications/export?status[]=pending&status[]=rejected&status[]=default`,'',
+            `/cash-advance-applications/export?status[]=pending&status[]=rejected&status[]=default`,
+          "",
           {
             headers: authHeader(),
           }
@@ -938,19 +957,21 @@ export default {
     },
   },
   computed: {
-    filteredMca(){
-      if(this.search){
-        return this.cash_advance_application.filter(row => {
+    filteredMca() {
+      if (this.search) {
+        return this.cash_advance_application.filter((row) => {
           const merchantName = row.merchantId.merchantInformation.businessName.toLowerCase();
-          const creator = row.createdBy ? row.createdBy.name.toLowerCase() : '';
+          const creator = row.createdBy ? row.createdBy.name.toLowerCase() : "";
           const searchTerm = this.search.toLowerCase();
 
-          return  merchantName.includes(searchTerm) || creator.includes(searchTerm);
+          return (
+            merchantName.includes(searchTerm) || creator.includes(searchTerm)
+          );
         });
-      }else{
+      } else {
         return this.cash_advance_application;
       }
-    }
-  }
+    },
+  },
 };
 </script>

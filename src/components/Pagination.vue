@@ -368,7 +368,7 @@ export default {
       return this.meta.current_page === this.meta.last_page;
     },
     isFirstPage() {
-      return this.meta.current_page === 1;
+      return this.meta?.current_page === 1;
     },
     isCurrentPage(page) {
       return this.meta.current_page === page;
