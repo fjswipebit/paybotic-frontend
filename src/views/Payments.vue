@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 mt-6 sm:px-6 lg:px-8">
+  <!-- <div class="px-4 mt-6 sm:px-6 lg:px-8">
     <div class="flex justify-between">
       <div class="flex justify-start">
         <div>
@@ -111,7 +111,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
   <div class="mt-8">
     <div class="align-middle">
       <div class="flex flex-col">
@@ -303,7 +303,11 @@
                         text-sm text-gray-500 text-right
                       "
                     >
-                      {{ moment(payment.date).format("MM/DD/YYYY h:mm a") }}
+                      {{
+                        moment(
+                          payment?.amortizationScheduleId?.created_at
+                        ).format("MM/DD/YYYY h:mm a")
+                      }}
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
@@ -320,9 +324,10 @@
                     >
                       {{
                         formatCurrency(
-                          payment.amortizationScheduleId.total_daily_repayment
+                          payment?.amortizationScheduleId?.total_daily_repayment
                         )
                       }}
+                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
                     </td>
                     <td
                       class="
@@ -334,9 +339,10 @@
                     >
                       {{
                         formatCurrency(
-                          payment.amortizationScheduleId.actual_amount_paid
+                          payment?.amortizationScheduleId?.actual_amount_paid
                         )
                       }}
+                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
                     </td>
                     <td
                       class="
@@ -348,9 +354,10 @@
                     >
                       {{
                         formatCurrency(
-                          payment.amortizationScheduleId.actual_amount_paid
+                          payment?.amortizationScheduleId?.actual_amount_paid
                         )
                       }}
+                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
                     </td>
                     <td
                       class="
@@ -458,20 +465,20 @@ import axios from "axios";
 import moment from "moment-timezone";
 import Pagination from "@/components/Pagination";
 import authHeader from "../services/auth-header";
-import {
-  SearchIcon,
-  FilterIcon,
-  DocumentDownloadIcon,
-  RefreshIcon,
-} from "@heroicons/vue/solid";
+// import {
+//   SearchIcon,
+//   FilterIcon,
+//   DocumentDownloadIcon,
+//   RefreshIcon,
+// } from "@heroicons/vue/solid";
 
 export default {
   components: {
-    SearchIcon,
-    FilterIcon,
+    // SearchIcon,
+    // FilterIcon,
     Pagination,
-    DocumentDownloadIcon,
-    RefreshIcon,
+    // DocumentDownloadIcon,
+    // RefreshIcon,
   },
   data() {
     return {
@@ -502,7 +509,15 @@ export default {
           search;
       axios.get(url, { headers: authHeader() }).then((response) => {
         console.log(response.data.data.data);
-        this.payments = response.data.data.data;
+
+        const _payments = response.data.data.data.slice().sort((a, b) => {
+          return (
+            new Date(b.amortizationScheduleId?.created_at) -
+            new Date(a.amortizationScheduleId?.created_at)
+          );
+        });
+        console.log(_payments);
+        this.payments = _payments;
         this.pagination = response.data.data;
       });
     },

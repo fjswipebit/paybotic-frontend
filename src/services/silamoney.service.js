@@ -48,6 +48,7 @@ class SilaMoneyService {
       headers: {
         accept: "*/*",
         "Content-Type": "application/json",
+        // "Access-Control-Allow-Origin": "*",
       },
     };
 
