@@ -2680,12 +2680,14 @@ export default {
     getStartDate() {
       var date = new Date(this.form.startDate);
       date.setDate(date.getDate() + 1);
-      return new Date(date).toISOString().slice(0, 10);
+      // return new Date(date).toISOString().slice(0, 10);
+      return "";
     },
     setStartDate() {
       var date = new Date();
       date.setDate(date.getDate() + 1);
-      return new Date(date).toISOString().slice(0, 10);
+      // return new Date(date).toISOString().slice(0, 10);
+      return "";
     },
     checkSubmitLink() {
       return this.existingMerchant ? this.submitForm : this.goTo(7, "next");
@@ -2988,6 +2990,17 @@ export default {
     },
 
     submitForm() {
+      Swal.fire({
+        title: "Submitting Application.",
+        text: "Please wait.",
+        icon: "info",
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          Swal.getHtmlContainer().querySelector("b");
+        },
+      });
       if (this.existingMerchant) this.submitApplication();
       else {
         this.submitBtn = true;
