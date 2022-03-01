@@ -641,7 +641,12 @@
                                   <button
                                     type="button"
                                     @click="
-                                      changeStatusTo('approved', application.id)
+                                      changeStatusTo(
+                                        'approved',
+                                        application.id,
+                                        application.merchantInformation
+                                          .is_bank_linked
+                                      )
                                     "
                                     :class="[
                                       active
@@ -831,7 +836,7 @@ export default {
           console.log(this.cash_advance_application, this.pagination);
         });
     },
-    async changeStatusTo(currentStatus, id) {
+    async changeStatusTo(currentStatus, id, bankLinked) {
       let reason = null;
       if (currentStatus == "rejected") {
         const { value: text } = await Swal.fire({
@@ -845,8 +850,9 @@ export default {
         });
         reason = text;
       }
-      console.log(reason, currentStatus, id);
-      if (reason || currentStatus == "approved") {
+      console.log(reason, currentStatus, id, bankLinked);
+
+      if ((reason || currentStatus == "approved") && bankLinked === 1) {
         axios
           .put(
             process.env.VUE_APP_API_URL + `/cash-advance-applications/` + id,
@@ -890,6 +896,18 @@ export default {
               console.log("Error", error.message);
             }
           });
+      } else {
+        Swal.fire({
+          title: "Merchant's bank account not linked yet.",
+          text: "Please link bank account to approve application.",
+          icon: "error",
+          confirmButtonText: `Go to merchant`,
+          showCloseButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = `/merchants/${id}/show`;
+          }
+        });
       }
     },
     onPickFile() {
