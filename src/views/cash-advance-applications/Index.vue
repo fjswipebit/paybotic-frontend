@@ -849,6 +849,50 @@ export default {
           showCancelButton: true,
         });
         reason = text;
+        axios
+          .put(
+            process.env.VUE_APP_API_URL + `/cash-advance-applications/` + id,
+            {
+              status: currentStatus,
+              rejectReason: reason,
+            },
+            { headers: authHeader() }
+          )
+          .then((response) => {
+            console.log(response);
+            Swal.fire({
+              title: "Well done!",
+              text:
+                "You have successfuly " +
+                currentStatus +
+                " the cash advance application",
+              icon: "success",
+            }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "/cash-advance-applications";
+              }
+            });
+          })
+          .catch(function(error) {
+            if (error.response) {
+              // Request made and server responded
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+              Swal.fire({
+                title: "Oops! Something went wrong.",
+                text: error.response.data.message,
+                icon: "error",
+              });
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request);
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log("Error", error.message);
+            }
+          });
+        return;
       }
       console.log(reason, currentStatus, id, bankLinked);
 
