@@ -645,7 +645,8 @@
                                         'approved',
                                         application.id,
                                         application.merchantInformation
-                                          .is_bank_linked
+                                          .is_bank_linked,
+                                        application.merchantInformation.id
                                       )
                                     "
                                     :class="[
@@ -836,7 +837,7 @@ export default {
           console.log(this.cash_advance_application, this.pagination);
         });
     },
-    async changeStatusTo(currentStatus, id, bankLinked) {
+    async changeStatusTo(currentStatus, id, bankLinked, merchantId) {
       let reason = null;
       if (currentStatus == "rejected") {
         const { value: text } = await Swal.fire({
@@ -894,7 +895,7 @@ export default {
           });
         return;
       }
-      console.log(reason, currentStatus, id, bankLinked);
+      console.log(reason, currentStatus, merchantId, bankLinked);
 
       if ((reason || currentStatus == "approved") && bankLinked === 1) {
         axios
@@ -949,7 +950,7 @@ export default {
           showCloseButton: true,
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = `/merchants/${id}/show`;
+            window.location.href = `/merchants/${merchantId}/show`;
           }
         });
       }

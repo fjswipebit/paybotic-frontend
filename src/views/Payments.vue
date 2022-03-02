@@ -304,9 +304,9 @@
                       "
                     >
                       {{
-                        moment(
-                          payment?.amortizationScheduleId?.created_at
-                        ).format("MM/DD/YYYY h:mm a")
+                        moment(payment?.dateInitiated).format(
+                          "MM/DD/YYYY h:mm a"
+                        )
                       }}
                     </td>
                     <td
@@ -342,7 +342,6 @@
                           payment?.amortizationScheduleId?.actual_amount_paid
                         )
                       }}
-                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
                     </td>
                     <td
                       class="
@@ -357,7 +356,6 @@
                           payment?.amortizationScheduleId?.actual_amount_paid
                         )
                       }}
-                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
                     </td>
                     <td
                       class="
@@ -415,13 +413,13 @@
                             payment.cashAdvanceApplicationId.status != 'FULL',
                         }"
                       >
-                        {{ payment.cashAdvanceApplicationId.status }}
+                        {{ payment.status }}
                       </span>
                     </td>
                     <td
                       class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ payment.cashAdvanceApplicationId.id }}
+                      {{ payment.cashAdvanceApplicationId }}
                     </td>
                   </tr>
                   <tr v-show="payments.length === 0">
