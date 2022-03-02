@@ -1065,8 +1065,16 @@ export default {
       user_email: "",
       merchant: "",
       tabs: [
-        { name: "Basic Information", href: "#", current: true },
-        { name: "Amortization Schedule", href: "#", current: false },
+        {
+          name: "Basic Information",
+          href: "#basic-information",
+          current: true,
+        },
+        {
+          name: "Amortization Schedule",
+          href: "#amortization-schedule",
+          current: false,
+        },
       ],
     };
   },
@@ -1078,6 +1086,7 @@ export default {
     this.user_email = localStorage.getItem("user_email");
   },
   mounted() {
+    console.log(this.$route.query.amortsched);
     if (this.$route.query.amortsched === "true") this.selectTab(1);
   },
   computed: {
@@ -1208,15 +1217,11 @@ export default {
         });
     },
     selectTab(i, type) {
-      // if(this.$route.fullPath.includes("false") ){
-
-      // }
       var tabIndex = i;
       if (type === "select") tabIndex = event.target.options.selectedIndex;
       this.tabs.forEach((tab, index) => {
         if (index === tabIndex) tab.current = true;
         else tab.current = false;
-        console.log(index === tabIndex, index, tabIndex);
       });
     },
     formatCurrency(value) {
