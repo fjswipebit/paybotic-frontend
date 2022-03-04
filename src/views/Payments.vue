@@ -509,11 +509,9 @@ export default {
         console.log(response.data.data.data);
 
         const _payments = response.data.data.data.slice().sort((a, b) => {
-          return (
-            new Date(b.amortizationScheduleId?.created_at) -
-            new Date(a.amortizationScheduleId?.created_at)
-          );
+          return new Date(b.dateInitiated) - new Date(a.dateInitiated);
         });
+
         console.log(_payments);
         this.payments = _payments;
         this.pagination = response.data.data;
