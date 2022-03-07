@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { LockClosedIcon } from "@heroicons/vue/solid";
 import AuthService from "../../services/auth.service";
 
@@ -170,17 +171,35 @@ export default {
       ) {
         window.location.href = "/";
       }
-
+      Swal.fire({
+        title: "Logging in.",
+        text: "Please wait.",
+        icon: "info",
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          Swal.getHtmlContainer().querySelector("b");
+        },
+      });
       AuthService.login({
         email: this.email,
         password: this.password,
-      })
-        .then((response) => {
-          console.log(response);
-          if (response.success == true) {
+      }).then((response) => {
+        console.log(response);
+        if (response.success == true) {
+          Swal.fire({
+            title: "Success",
+            icon: "success",
+            allowOutsideClick: false,
+            showCancelButton: false,
+            showConfirmButton: false,
+          });
+          setTimeout(() => {
             window.location.href = "/";
-          }
-        });
+          }, 1000);
+        }
+      });
     },
   },
 };
