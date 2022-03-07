@@ -465,6 +465,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 import moment from "moment-timezone";
 import Pagination from "@/components/Pagination";
 import authHeader from "../services/auth-header";
@@ -510,6 +511,18 @@ export default {
           process.env.VUE_APP_API_URL +
           `/cash-advance-payments?order=desc&per_page=10&page=1&search=` +
           search;
+
+      Swal.fire({
+        title: "Fetching payments",
+        text: "Please wait.",
+        icon: "info",
+        timerProgressBar: true,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+          Swal.getHtmlContainer().querySelector("b");
+        },
+      });
       axios.get(url, { headers: authHeader() }).then((response) => {
         console.log(response.data.data.data);
 
@@ -517,9 +530,16 @@ export default {
           return new Date(b.dateInitiated) - new Date(a.dateInitiated);
         });
 
-        console.log(_payments);
         this.payments = _payments;
         this.pagination = response.data.data;
+        if (_payments?.length > 0) {
+          Swal.fire({
+            icon: "success",
+            title: "Payments fetched",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
       });
     },
     async exportToExcel() {

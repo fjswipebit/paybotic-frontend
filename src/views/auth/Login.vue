@@ -172,7 +172,7 @@ export default {
         window.location.href = "/";
       }
       Swal.fire({
-        title: "Logging in.",
+        title: "Logging in",
         text: "Please wait.",
         icon: "info",
         timerProgressBar: true,
