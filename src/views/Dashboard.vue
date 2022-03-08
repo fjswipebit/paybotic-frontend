@@ -799,7 +799,7 @@
                       >
                     </td>
                   </tr>
-                  <tr v-show="dues.length === 0">
+                  <tr v-show="payments_today.length === 0">
                     <td
                       colspan="9"
                       class="
@@ -1306,11 +1306,11 @@ export default {
         })
         .then((response) => {
           var payments = response.data.data;
-          console.log(response);
+
           var count = 0;
           payments.map((payment) => {
             if (
-              moment(payment.createdAt).format("YYYY-MM-DD") ===
+              moment(payment.dateSettled).format("YYYY-MM-DD") ===
               moment().format("YYYY-MM-DD")
             ) {
               this.payments_today.push(payment);
