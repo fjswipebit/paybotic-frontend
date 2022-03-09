@@ -955,6 +955,17 @@ export default {
       };
 
       try {
+        Swal.fire({
+          title: "Linking merchant bank account",
+          text: "Please wait.",
+          icon: "info",
+          timerProgressBar: true,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+            Swal.getHtmlContainer().querySelector("b");
+          },
+        });
         let res = await SilaMoneyService.linkBankAccount(merchantData);
         if (res.data.result.data.success) {
           let merchant = {
@@ -963,6 +974,7 @@ export default {
             kyc_status: "verified",
             is_bank_linked: true,
           };
+
           await axios
             .put(
               process.env.VUE_APP_API_URL +
@@ -984,10 +996,15 @@ export default {
               }, 1000);
             });
         } else {
-          console.log(res);
+          let listOfErrors = Object.keys(
+            res.data.result.data.validation_details
+          ).map((key) => {
+            return res.data.result.data.validation_details[key];
+          });
           Swal.fire({
             title: "Oops! Something went wrong.",
             icon: "error",
+            text: listOfErrors,
           });
         }
         return res;
