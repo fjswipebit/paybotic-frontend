@@ -898,6 +898,17 @@ export default {
       console.log(reason, currentStatus, merchantId, bankLinked);
 
       if ((reason || currentStatus == "approved") && bankLinked === 1) {
+        Swal.fire({
+          title: "Approving MCA Application",
+          text: "Please wait.",
+          icon: "info",
+          timerProgressBar: true,
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+            Swal.getHtmlContainer().querySelector("b");
+          },
+        });
         axios
           .put(
             process.env.VUE_APP_API_URL + `/cash-advance-applications/` + id,
