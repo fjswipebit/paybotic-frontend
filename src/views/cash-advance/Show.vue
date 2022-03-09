@@ -825,7 +825,7 @@
                                 </span>
                               </td>
                             </tr>
-                            <tr
+                            <!-- <tr
                               v-for="(payment, index) in separate_payments"
                               :key="index"
                             >
@@ -839,7 +839,7 @@
                                   text-gray-900
                                 "
                               >
-                                {{ amortization_scheds?.length + (index + 1) }}
+                                {{ amortization_scheds?.length + (index + 1) ? amortization_scheds?.length + (index + 1) : null  }}
                               </td>
 
                               <td
@@ -898,7 +898,7 @@
                                 {{ formatCurrency(0) }}
                               </td>
 
-                              <!-- actual -->
+                              
                               <td
                                 class="
                                   px-6
@@ -1009,7 +1009,7 @@
                                   {{ payment.status }}
                                 </span>
                               </td>
-                            </tr>
+                            </tr> -->
                           </tbody>
                         </table>
                       </div>
