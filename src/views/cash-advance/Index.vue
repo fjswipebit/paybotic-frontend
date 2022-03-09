@@ -551,7 +551,7 @@
                                   :href="
                                     `/cash-advances/` +
                                       cash_advance.id +
-                                      `/show`
+                                      `/show?amortsched=false`
                                   "
                                   :class="[
                                     active

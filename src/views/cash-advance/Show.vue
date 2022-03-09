@@ -108,7 +108,7 @@
                           'w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm',
                         ]"
                         :aria-current="tab.current ? 'page' : undefined"
-                        @click="selectTab(index)"
+                        @click="selectTab(index, tab)"
                       >
                         {{ tab.name }}
                       </a>
@@ -694,7 +694,9 @@
                                   text-sm text-gray-500 text-right
                                 "
                               >
-                                {{ formatCurrency(period.payments.dailySales) }}
+                                {{
+                                  formatCurrency(period?.payments?.dailySales)
+                                }}
                               </td>
 
                               <td
@@ -707,7 +709,7 @@
                               >
                                 {{
                                   formatCurrency(
-                                    period.payments.withHoldingAmount
+                                    period?.payments?.withHoldingAmount
                                   )
                                 }}
                               </td>
@@ -722,7 +724,7 @@
                               >
                                 {{
                                   formatCurrency(
-                                    period.payments.principalAmount
+                                    period?.payments?.principalAmount
                                   )
                                 }}
                               </td>
@@ -736,7 +738,9 @@
                                 "
                               >
                                 {{
-                                  formatCurrency(period.payments.factoringFees)
+                                  formatCurrency(
+                                    period?.payments?.factoringFees
+                                  )
                                 }}
                               </td>
 
@@ -750,7 +754,7 @@
                               >
                                 {{
                                   formatCurrency(
-                                    period.payments.remainingPrincipal
+                                    period?.payments?.remainingPrincipal
                                   )
                                 }}
                               </td>
@@ -766,7 +770,7 @@
                               >
                                 {{
                                   formatCurrency(
-                                    period.payments.remainingTotalBalance
+                                    period?.payments?.remainingTotalBalance
                                   )
                                 }}
                               </td>
@@ -797,7 +801,7 @@
                                 "
                               >
                                 {{
-                                  moment(period.payments.date).format(
+                                  moment(period?.payments?.date).format(
                                     "MM/DD/YYYY"
                                   )
                                 }}
@@ -998,7 +1002,7 @@
                               >
                                 <span
                                   :class="[
-                                    paymentStatusStyles[period.status],
+                                    paymentStatusStyles[payment.status],
                                     'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize',
                                   ]"
                                 >
@@ -1166,6 +1170,7 @@ export default {
           }
         )
         .then((response) => {
+          console.log(response.data.data);
           this.amortization_sched = response.data.data;
         });
     },
@@ -1217,8 +1222,19 @@ export default {
         });
     },
     selectTab(i, type) {
+      console.log(i, type);
+      switch (i) {
+        case 0:
+          this.$router.replace(`${this.$route.path}?amortsched=false`);
+          break;
+        case 1:
+          this.$router.replace(`${this.$route.path}?amortsched=true`);
+          break;
+        default:
+          break;
+      }
       var tabIndex = i;
-      if (type === "select") tabIndex = event.target.options.selectedIndex;
+      // if (type === "select") tabIndex = event.target.options.selectedIndex;
       this.tabs.forEach((tab, index) => {
         if (index === tabIndex) tab.current = true;
         else tab.current = false;
