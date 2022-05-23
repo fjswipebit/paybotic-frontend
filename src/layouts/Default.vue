@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen flex overflow-hidden bg-white">
-    <Sidebar :open="sidebarOpen" @closeSidebar="sidebarOpen = false"/>
+    <Sidebar :open="sidebarOpen" @closeSidebar="sidebarOpen = false" />
     <!-- Main column -->
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
       <!-- Search header -->

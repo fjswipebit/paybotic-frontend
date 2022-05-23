@@ -1,5 +1,5 @@
 <template>
-  <!-- <div class="px-4 mt-6 sm:px-6 lg:px-8">
+    <!-- <div class="px-4 mt-6 sm:px-6 lg:px-8">
     <div class="flex justify-between">
       <div class="flex justify-start">
         <div>
@@ -112,27 +112,27 @@
       </div>
     </div>
   </div> -->
-  <div class="mt-8">
-    <div class="align-middle">
-      <div class="flex flex-col">
-        <div class="-my-2 overflow-x-auto">
-          <div
-            class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
-          >
-            <div
-              class="
+    <div class="mt-8">
+        <div class="align-middle">
+            <div class="flex flex-col">
+                <div class="-my-2 overflow-x-auto">
+                    <div
+                        class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
+                    >
+                        <div
+                            class="
                 shadow
                 overflow-hidden
                 border-b border-gray-200
                 sm:rounded-lg
               "
-            >
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      class="
+                        >
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-xs
@@ -141,12 +141,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Date and Time of Payment
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Date and Time of Payment
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -155,12 +155,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Business Name (DBA)
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Business Name (DBA)
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -169,12 +169,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Amount Due
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Amount Due
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -183,12 +183,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Amount Paid
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Amount Paid
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -197,12 +197,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Total Amount Paid
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Total Amount Paid
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -211,12 +211,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Factoring Fees
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Factoring Fees
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         text-right
                         px-6
                         py-3
@@ -226,12 +226,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Remaining Principal
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Remaining Principal
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         text-right
                         px-6
                         py-3
@@ -241,12 +241,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Remaining Total Balance
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Remaining Total Balance
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         text-right
                         px-6
                         py-3
@@ -256,12 +256,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Period
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Period
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         text-right
                         px-6
                         py-3
@@ -271,12 +271,12 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      class="
+                                        >
+                                            Status
+                                        </th>
+                                        <th
+                                            scope="col"
+                                            class="
                         px-6
                         py-3
                         text-left text-xs
@@ -285,123 +285,147 @@
                         uppercase
                         tracking-wider
                       "
-                    >
-                      Cash Advance ID
-                    </th>
-                    <!-- <th scope="col" class="relative px-6 py-3">
+                                        >
+                                            Cash Advance ID
+                                        </th>
+                                        <!-- <th scope="col" class="relative px-6 py-3">
                       <span class="sr-only">Edit</span>
                     </th> -->
-                  </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="payment in payments" :key="payment.id">
-                    <td
-                      class="
+                                    </tr>
+                                </thead>
+                                <tbody
+                                    class="bg-white divide-y divide-gray-200"
+                                >
+                                    <tr
+                                        v-for="payment in payments"
+                                        :key="payment.id"
+                                    >
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{
-                        moment(payment?.dateInitiated).format(
-                          "MM/DD/YYYY h:mm a"
-                        )
-                      }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{ payment.merchantInformation.businessName }}
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                moment(
+                                                    payment?.dateInitiated
+                                                ).format("MM/DD/YYYY h:mm a")
+                                            }}
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                        >
+                                            {{
+                                                payment.merchantInformation
+                                                    .businessName
+                                            }}
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{
-                        formatCurrency(
-                          payment?.amortizationScheduleId?.total_daily_repayment
-                        )
-                      }}
-                      <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment
+                                                        ?.amortizationScheduleId
+                                                        ?.total_daily_repayment
+                                                )
+                                            }}
+                                            <!-- {{ formatCurrency(payment.withHoldingAmount) }} -->
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{
-                        formatCurrency(
-                          payment?.amortizationScheduleId?.actual_amount_paid
-                        )
-                      }}
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment
+                                                        ?.amortizationScheduleId
+                                                        ?.actual_amount_paid
+                                                )
+                                            }}
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{
-                        formatCurrency(
-                          payment?.amortizationScheduleId?.actual_amount_paid
-                        )
-                      }}
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment
+                                                        ?.amortizationScheduleId
+                                                        ?.actual_amount_paid
+                                                )
+                                            }}
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{ formatCurrency(payment.factoringFees) }}
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment.factoringFees
+                                                )
+                                            }}
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{ formatCurrency(payment.remainingPrincipal) }}
-                    </td>
-                    <td
-                      class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment.remainingPrincipal
+                                                )
+                                            }}
+                                        </td>
+                                        <td
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
                         text-sm text-gray-500 text-right
                       "
-                    >
-                      {{
-                        formatCurrency(
-                          payment?.amortizationScheduleId
-                            ?.remaining_total_balance
-                        )
-                      }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{ payment.durationOfCashAdvance + " days" }}
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      <span
-                        class="
+                                        >
+                                            {{
+                                                formatCurrency(
+                                                    payment?.remainingTotalBalance
+                                                )
+                                            }}
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                        >
+                                            {{
+                                                payment.durationOfCashAdvance +
+                                                    " days"
+                                            }}
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                        >
+                                            <span
+                                                class="
                           inline-flex
                           items-center
                           px-3
@@ -411,26 +435,32 @@
                           font-medium
                           uppercase
                         "
-                        :class="{
-                          'bg-green-100 text-green-800':
-                            payment.cashAdvanceApplicationId.status == 'FULL',
-                          'bg-blue-100 text-blue-800':
-                            payment.cashAdvanceApplicationId.status != 'FULL',
-                        }"
-                      >
-                        {{ payment.status }}
-                      </span>
-                    </td>
-                    <td
-                      class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
-                    >
-                      {{ payment.cashAdvanceApplicationId }}
-                    </td>
-                  </tr>
-                  <tr v-show="payments.length === 0">
-                    <td
-                      colspan="10"
-                      class="
+                                                :class="{
+                                                    'bg-green-100 text-green-800':
+                                                        payment
+                                                            .cashAdvanceApplicationId
+                                                            .status == 'FULL',
+                                                    'bg-blue-100 text-blue-800':
+                                                        payment
+                                                            .cashAdvanceApplicationId
+                                                            .status != 'FULL',
+                                                }"
+                                            >
+                                                {{ payment.status }}
+                                            </span>
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                                        >
+                                            {{
+                                                payment.cashAdvanceApplicationId
+                                            }}
+                                        </td>
+                                    </tr>
+                                    <tr v-show="payments.length === 0">
+                                        <td
+                                            colspan="10"
+                                            class="
                         px-6
                         py-4
                         whitespace-nowrap
@@ -439,28 +469,29 @@
                         text-gray-500 text-center
                         italic
                       "
-                    >
-                      The payments table is currently empty.
-                    </td>
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <td colspan="10">
-                      <Pagination
-                        :pagination="pagination"
-                        @update="getPayments"
-                      />
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                                        >
+                                            The payments table is currently
+                                            empty.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="10">
+                                            <Pagination
+                                                :pagination="pagination"
+                                                @update="getPayments"
+                                            />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -477,95 +508,103 @@ import authHeader from "../services/auth-header";
 // } from "@heroicons/vue/solid";
 
 export default {
-  components: {
-    // SearchIcon,
-    // FilterIcon,
-    Pagination,
-    // DocumentDownloadIcon,
-    // RefreshIcon,
-  },
-  data() {
-    return {
-      search: "",
-      pagination: "",
-      payments: "",
-    };
-  },
-  methods: {
-    reset() {
-      this.search = null;
-      this.getPayments();
+    components: {
+        // SearchIcon,
+        // FilterIcon,
+        Pagination,
+        // DocumentDownloadIcon,
+        // RefreshIcon,
     },
-    async getPayments(page, search) {
-      var url =
-        process.env.VUE_APP_API_URL +
-        `/cash-advance-payments?order=desc&per_page=10&page=1`;
-
-      if (page)
-        url =
-          process.env.VUE_APP_API_URL +
-          `/cash-advance-payments?order=desc&per_page=10&page=` +
-          page;
-      else if (search)
-        url =
-          process.env.VUE_APP_API_URL +
-          `/cash-advance-payments?order=desc&per_page=10&page=1&search=` +
-          search;
-
-      Swal.fire({
-        title: "Fetching payments",
-        text: "Please wait.",
-        icon: "info",
-        timerProgressBar: true,
-        allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-          Swal.getHtmlContainer().querySelector("b");
+    data() {
+        return {
+            search: "",
+            pagination: "",
+            payments: "",
+        };
+    },
+    methods: {
+        reset() {
+            this.search = null;
+            this.getPayments();
         },
-      });
-      axios.get(url, { headers: authHeader() }).then((response) => {
-        console.log(response.data.data.data);
+        async getPayments(page, search) {
+            var url =
+                process.env.VUE_APP_API_URL +
+                `/cash-advance-payments?order=desc&per_page=10&page=1`;
 
-        const _payments = response.data.data.data.slice().sort((a, b) => {
-          return new Date(b.dateInitiated) - new Date(a.dateInitiated);
-        });
+            if (page)
+                url =
+                    process.env.VUE_APP_API_URL +
+                    `/cash-advance-payments?order=desc&per_page=10&page=` +
+                    page;
+            else if (search)
+                url =
+                    process.env.VUE_APP_API_URL +
+                    `/cash-advance-payments?order=desc&per_page=10&page=1&search=` +
+                    search;
 
-        this.payments = _payments;
-        this.pagination = response.data.data;
-        if (_payments?.length > 0) {
-          Swal.fire({
-            icon: "success",
-            title: "Payments fetched",
-            showConfirmButton: false,
-            timer: 1000,
-          });
-        }
-      });
+            Swal.fire({
+                title: "Fetching payments",
+                text: "Please wait.",
+                icon: "info",
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                    Swal.getHtmlContainer().querySelector("b");
+                },
+            });
+            axios.get(url, { headers: authHeader() }).then((response) => {
+                console.log(response.data.data.data);
+                console.log(response);
+                const _payments = response.data.data.data
+                    .slice()
+                    .sort((a, b) => {
+                        return (
+                            new Date(b.dateInitiated) -
+                            new Date(a.dateInitiated)
+                        );
+                    });
+
+                this.payments = _payments;
+                this.pagination = response.data.data;
+                if (response.status === 200) {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Payments fetched",
+                        showConfirmButton: false,
+                        timer: 1000,
+                    });
+                }
+            });
+        },
+        async exportToExcel() {
+            await axios
+                .post(
+                    process.env.VUE_APP_API_URL +
+                        `/cash-advance-payments/export`,
+                    "",
+                    {
+                        headers: authHeader(),
+                    }
+                )
+                .then((response) => {
+                    window.location.href = response.data.data;
+                });
+        },
+        formatCurrency(value) {
+            if (!value) {
+                return "$ 0.00";
+            }
+            const number = (value / 1).toFixed(2).replace(",", ".");
+            return (
+                "$ " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+        },
     },
-    async exportToExcel() {
-      await axios
-        .post(
-          process.env.VUE_APP_API_URL + `/cash-advance-payments/export`,
-          "",
-          {
-            headers: authHeader(),
-          }
-        )
-        .then((response) => {
-          window.location.href = response.data.data;
-        });
+    created() {
+        this.getPayments();
+        this.moment = moment;
     },
-    formatCurrency(value) {
-      if (!value) {
-        return "$ 0.00";
-      }
-      const number = (value / 1).toFixed(2).replace(",", ".");
-      return "$ " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-  },
-  created() {
-    this.getPayments();
-    this.moment = moment;
-  },
 };
 </script>

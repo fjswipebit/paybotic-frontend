@@ -570,6 +570,7 @@ export default {
           headers: authHeader(),
         })
         .then((response) => {
+          console.log(response.data.data.data);
           this.merchants = response.data.data.data;
           this.pagination = response.data.data;
         });
