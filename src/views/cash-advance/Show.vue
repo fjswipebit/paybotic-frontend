@@ -687,7 +687,6 @@
                                 }}
                               </td>
 
-                              <!-- actual -->
                               <td
                                 class="
                                   px-6
@@ -1068,7 +1067,7 @@ export default {
   },
   data() {
     return {
-      amortization_sched: '',
+      amortization_sched: null,
       separate_payments: [],
       cash_advance: '',
       user_email: '',
@@ -1155,12 +1154,13 @@ export default {
           var payments = response.data.data
           console.log('payments', payments)
           payments.forEach(payment => {
-            var count = 0
-            this.amortization_sched.forEach(sched => {
-              if (payment.id === sched.payments.id) count++
-            })
+            // var count = 0
+            // this.amortization_sched.forEach(sched => {
+            //   if (payment.id === sched.payments.id) count++
+            // })
 
-            if (count === 0) this.separate_payments.push(payment)
+            // if (count === 0)
+            this.separate_payments.push(payment)
           })
         })
     },
@@ -1175,8 +1175,14 @@ export default {
           }
         )
         .then(response => {
-          console.log(response.data.data)
-          this.amortization_sched = response.data.data
+          console.log('amort', response.data.data)
+          let amortList = []
+          response.data.data.map(res => {
+            delete res.payments
+            res.status = 'pending'
+            amortList.push(res)
+          })
+          this.amortization_sched = amortList
         })
     },
     async changeStatus(status) {
