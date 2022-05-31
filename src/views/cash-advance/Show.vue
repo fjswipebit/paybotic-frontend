@@ -163,12 +163,14 @@
                     <dd class="mt-1 text-sm text-gray-900">
                       {{
                         (cash_advance.witholdingPercentage * 100).toFixed(2) +
-                          "%" ?? "-"
+                          '%' ?? '-'
                       }}
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Status</dt>
+                    <dt class="text-sm font-medium text-gray-500">
+                      Status
+                    </dt>
                     <dd class="mt-1 text-sm text-gray-900">
                       <span
                         :class="[
@@ -177,8 +179,8 @@
                         ]"
                       >
                         {{
-                          cash_advance.status === "approved"
-                            ? "Active"
+                          cash_advance.status === 'approved'
+                            ? 'Active'
                             : cash_advance.status
                         }}
                       </span>
@@ -223,10 +225,10 @@
                     <dd class="mt-1 text-sm text-gray-900">
                       <span
                         >{{
-                          moment(cash_advance.startDate).format("MM/DD/YYYY")
+                          moment(cash_advance.startDate).format('MM/DD/YYYY')
                         }}
                         to
-                        {{ moment(cash_advance.endDate).format("MM/DD/YYYY") }}
+                        {{ moment(cash_advance.endDate).format('MM/DD/YYYY') }}
                       </span>
                       <span class="text-gray-400"> ({{ dateDiff }} days)</span>
                     </dd>
@@ -276,7 +278,7 @@
                       Disbursed Amount
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900">
-                      {{ formatCurrency(disbursed_amount) ?? "-" }}
+                      {{ formatCurrency(disbursed_amount) ?? '-' }}
                     </dd>
                   </div>
                   <div class="sm:col-span-1">
@@ -288,7 +290,7 @@
                         formatCurrency(
                           cash_advance.principalAmount *
                             (cash_advance.originationFee / 100)
-                        ) ?? "-"
+                        ) ?? '-'
                       }}
                     </dd>
                   </div>
@@ -786,7 +788,7 @@
                               >
                                 {{
                                   moment(period.settlementDate).format(
-                                    "MM/DD/YYYY"
+                                    'MM/DD/YYYY'
                                   )
                                 }}
                               </td>
@@ -802,7 +804,7 @@
                               >
                                 {{
                                   moment(period?.payments?.date).format(
-                                    "MM/DD/YYYY"
+                                    'MM/DD/YYYY'
                                   )
                                 }}
                               </td>
@@ -825,7 +827,7 @@
                                 </span>
                               </td>
                             </tr>
-                            <!-- <tr
+                            <tr
                               v-for="(payment, index) in separate_payments"
                               :key="index"
                             >
@@ -839,7 +841,11 @@
                                   text-gray-900
                                 "
                               >
-                                {{ amortization_scheds?.length + (index + 1) ? amortization_scheds?.length + (index + 1) : null  }}
+                                {{
+                                  amortization_scheds?.length + (index + 1)
+                                    ? amortization_scheds?.length + (index + 1)
+                                    : null
+                                }}
                               </td>
 
                               <td
@@ -898,7 +904,6 @@
                                 {{ formatCurrency(0) }}
                               </td>
 
-                              
                               <td
                                 class="
                                   px-6
@@ -989,7 +994,7 @@
                                   text-sm text-gray-500 text-right
                                 "
                               >
-                                {{ moment(payment.date).format("MM/DD/YYYY") }}
+                                {{ moment(payment.date).format('MM/DD/YYYY') }}
                               </td>
 
                               <td
@@ -1009,7 +1014,7 @@
                                   {{ payment.status }}
                                 </span>
                               </td>
-                            </tr> -->
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -1026,30 +1031,30 @@
 </template>
 
 <script>
-import axios from "axios";
-import moment from "moment-timezone";
-import Breadcrumbs from "@/components/Breadcrumbs";
-import authHeader from "@/services/auth-header";
+import axios from 'axios'
+import moment from 'moment-timezone'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import authHeader from '@/services/auth-header'
 
 const pages = [
-  { name: "List of Cash Advance", href: "/cash-advance", current: false },
-  { name: "View Cash Advance Information", href: "#", current: true },
-];
+  { name: 'List of Cash Advance', href: '/cash-advance', current: false },
+  { name: 'View Cash Advance Information', href: '#', current: true },
+]
 
 const statusStyles = {
-  approved: "bg-green-100 text-green-800",
-  pending: "bg-yellow-100 text-yellow-800",
-  completed: "bg-blue-100 text-blue-800",
-  default: "bg-gray-100 text-gray-800",
-  failed: "bg-red-100 text-red-800",
-};
+  approved: 'bg-green-100 text-green-800',
+  pending: 'bg-yellow-100 text-yellow-800',
+  completed: 'bg-blue-100 text-blue-800',
+  default: 'bg-gray-100 text-gray-800',
+  failed: 'bg-red-100 text-red-800',
+}
 
 const paymentStatusStyles = {
-  partial: "bg-gray-100 text-gray-800",
-  pending: "bg-yellow-100 text-yellow-800",
-  completed: "bg-blue-100 text-blue-800",
-  missed: "bg-red-100 text-red-800",
-};
+  partial: 'bg-gray-100 text-gray-800',
+  pending: 'bg-yellow-100 text-yellow-800',
+  completed: 'bg-blue-100 text-blue-800',
+  missed: 'bg-red-100 text-red-800',
+}
 
 export default {
   components: {},
@@ -1059,64 +1064,64 @@ export default {
       statusStyles,
       paymentStatusStyles,
       pages,
-    };
+    }
   },
   data() {
     return {
-      amortization_sched: "",
+      amortization_sched: '',
       separate_payments: [],
-      cash_advance: "",
-      user_email: "",
-      merchant: "",
+      cash_advance: '',
+      user_email: '',
+      merchant: '',
       tabs: [
         {
-          name: "Basic Information",
-          href: "#basic-information",
+          name: 'Basic Information',
+          href: '#basic-information',
           current: true,
         },
         {
-          name: "Amortization Schedule",
-          href: "#amortization-schedule",
+          name: 'Amortization Schedule',
+          href: '#amortization-schedule',
           current: false,
         },
       ],
-    };
+    }
   },
   created() {
-    this.getCashAdvanceInfo();
-    this.getAmortizationSched();
-    this.getPayments();
-    this.moment = moment;
-    this.user_email = localStorage.getItem("user_email");
+    this.getCashAdvanceInfo()
+    this.getAmortizationSched()
+    this.getPayments()
+    this.moment = moment
+    this.user_email = localStorage.getItem('user_email')
   },
   mounted() {
-    console.log(this.$route.query.amortsched);
-    if (this.$route.query.amortsched === "true") this.selectTab(1);
+    console.log(this.$route.query.amortsched)
+    if (this.$route.query.amortsched === 'true') this.selectTab(1)
   },
   computed: {
     repayment_type() {
-      if (this.cash_advance.repaymentType === "daily_witholding")
-        return "Daily Withholding Percentage";
-      else if (this.cash_advance.repaymentType === "daily_fixed_amount")
-        return "Daily Fixed Amount";
-      else return "";
+      if (this.cash_advance.repaymentType === 'daily_witholding')
+        return 'Daily Withholding Percentage'
+      else if (this.cash_advance.repaymentType === 'daily_fixed_amount')
+        return 'Daily Fixed Amount'
+      else return ''
     },
     dateDiff() {
       return moment(this.cash_advance.endDate)
-        .add(1, "days")
-        .diff(moment(this.cash_advance.startDate), "days");
+        .add(1, 'days')
+        .diff(moment(this.cash_advance.startDate), 'days')
     },
     payback_amount() {
       var payback_amount =
-        this.cash_advance.principalAmount * this.cash_advance.factorRate;
-      return payback_amount.toFixed(2);
+        this.cash_advance.principalAmount * this.cash_advance.factorRate
+      return payback_amount.toFixed(2)
     },
     disbursed_amount() {
       var disbursed_amount =
         this.cash_advance.principalAmount -
         this.cash_advance.principalAmount *
-          (this.cash_advance.originationFee / 100);
-      return disbursed_amount.toFixed(2);
+          (this.cash_advance.originationFee / 100)
+      return disbursed_amount.toFixed(2)
     },
   },
   methods: {
@@ -1130,11 +1135,11 @@ export default {
             headers: authHeader(),
           }
         )
-        .then((response) => {
-          console.log(response);
-          this.cash_advance = response.data.data;
-          this.merchant = response.data.data.merchantInformation;
-        });
+        .then(response => {
+          console.log(response)
+          this.cash_advance = response.data.data
+          this.merchant = response.data.data.merchantInformation
+        })
     },
     async getPayments() {
       await axios
@@ -1146,18 +1151,18 @@ export default {
             headers: authHeader(),
           }
         )
-        .then((response) => {
-          var payments = response.data.data;
+        .then(response => {
+          var payments = response.data.data
+          console.log('payments', payments)
+          payments.forEach(payment => {
+            var count = 0
+            this.amortization_sched.forEach(sched => {
+              if (payment.id === sched.payments.id) count++
+            })
 
-          payments.forEach((payment) => {
-            var count = 0;
-            this.amortization_sched.forEach((sched) => {
-              if (payment.id === sched.payments.id) count++;
-            });
-
-            if (count === 0) this.separate_payments.push(payment);
-          });
-        });
+            if (count === 0) this.separate_payments.push(payment)
+          })
+        })
     },
     async getAmortizationSched() {
       await axios
@@ -1169,10 +1174,10 @@ export default {
             headers: authHeader(),
           }
         )
-        .then((response) => {
-          console.log(response.data.data);
-          this.amortization_sched = response.data.data;
-        });
+        .then(response => {
+          console.log(response.data.data)
+          this.amortization_sched = response.data.data
+        })
     },
     async changeStatus(status) {
       await axios
@@ -1189,22 +1194,22 @@ export default {
         )
         .then(() => {
           window.location.href =
-            "/cash-advances/" + this.$route.params.id + "/show";
+            '/cash-advances/' + this.$route.params.id + '/show'
         })
         .catch(function(error) {
           if (error.response) {
             // Request made and server responded
-            console.log(error.response.data);
-            console.log(error.response.status);
-            console.log(error.response.headers);
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
           } else if (error.request) {
             // The request was made but no response was received
-            console.log(error.request);
+            console.log(error.request)
           } else {
             // Something happened in setting up the request that triggered an Error
-            console.log("Error", error.message);
+            console.log('Error', error.message)
           }
-        });
+        })
     },
     async exportToExcel() {
       await axios
@@ -1212,41 +1217,41 @@ export default {
           process.env.VUE_APP_API_URL +
             `/amortization-schedules/` +
             this.$route.params.id,
-          "",
+          '',
           {
             headers: authHeader(),
           }
         )
-        .then((response) => {
-          window.location.href = response.data.data;
-        });
+        .then(response => {
+          window.location.href = response.data.data
+        })
     },
     selectTab(i, type) {
-      console.log(i, type);
+      console.log(i, type)
       switch (i) {
         case 0:
-          this.$router.replace(`${this.$route.path}?amortsched=false`);
-          break;
+          this.$router.replace(`${this.$route.path}?amortsched=false`)
+          break
         case 1:
-          this.$router.replace(`${this.$route.path}?amortsched=true`);
-          break;
+          this.$router.replace(`${this.$route.path}?amortsched=true`)
+          break
         default:
-          break;
+          break
       }
-      var tabIndex = i;
+      var tabIndex = i
       // if (type === "select") tabIndex = event.target.options.selectedIndex;
       this.tabs.forEach((tab, index) => {
-        if (index === tabIndex) tab.current = true;
-        else tab.current = false;
-      });
+        if (index === tabIndex) tab.current = true
+        else tab.current = false
+      })
     },
     formatCurrency(value) {
       if (!value) {
-        return "$ 0.00";
+        return '$ 0.00'
       }
-      const number = (value / 1).toFixed(2).replace(",", ".");
-      return "$ " + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      const number = (value / 1).toFixed(2).replace(',', '.')
+      return '$ ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
   },
-};
+}
 </script>
